@@ -7,6 +7,7 @@ doushadeMacBook-Pro:doc cl$ cleos create key
 Private key: 5Jqs5XFBqC787ywHjfUiT66HrEug5RCcqwgBsFYAX6nz8GU6W8t
 Public key: EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et
 
+
 1.2 Import eosio private key,and then create three accouts, who will be used
 cleos wallet import 5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3
 
