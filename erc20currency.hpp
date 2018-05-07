@@ -4,8 +4,7 @@
 #include <eosiolib/multi_index.hpp>
 #include <vector>
 
-#define SUCCESS_CODE 0
-#define NOT_ENOUGH_ALLOWED  "6000017 NOT_ENOUGH_ALLOWED"
+
 
 
 namespace oct {

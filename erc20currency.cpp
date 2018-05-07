@@ -7,7 +7,7 @@
  *  @copyright defined in eos/LICENSE.txt
  */
 #include "erc20currency.hpp"
-
+#include"../oc_askanswer/tool.hpp"
 namespace oct {
 
    using std::string;
@@ -28,8 +28,8 @@ using namespace eosio;
        const auto& st = statstable.get( sym );
 
        require_auth( st.issuer );
-       eosio_assert( i.quantity.is_valid(), "invalid quantity" );
-       eosio_assert( i.quantity.amount > 0, "must issue positive quantity" );
+       eosio_assert( i.quantity.is_valid(), INVALID_QUANTITY );
+       eosio_assert( i.quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
 
        statstable.modify( st, 0, [&]( auto& s ) {
           s.supply.amount += i.quantity.amount;
@@ -49,7 +49,7 @@ using namespace eosio;
         }
         else
         {
-            eosio_assert( false, "insufficient authority" );
+            eosio_assert( false, NSUFFICIENT_AUTHORITY);
         }
        auto sym = t.quantity.symbol.name();
        stats statstable( _contract, sym );
@@ -57,8 +57,8 @@ using namespace eosio;
 
        require_recipient( t.to );
 
-       eosio_assert( t.quantity.is_valid(), "invalid quantity" );
-       eosio_assert( t.quantity.amount > 0, "must transfer positive quantity" );
+       eosio_assert( t.quantity.is_valid(), INVALID_QUANTITY );
+       eosio_assert( t.quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
        sub_balance( t.from, t.quantity, st );
        add_balance( t.to, t.quantity, st, t.from );
     }
@@ -67,11 +67,11 @@ using namespace eosio;
        accounts from_acnts( _contract, owner );
 
        const auto& from = from_acnts.get( value.symbol );
-       eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
+       eosio_assert( from.balance.amount >= value.amount, BLANCE_NOT_ENOUGH );
 
-       eosio_assert( !st.can_freeze || !from.frozen, "account is frozen by issuer" );
-       eosio_assert( !st.can_freeze || !st.is_frozen, "all transfers are frozen by issuer" );
-       eosio_assert( !st.enforce_whitelist || from.whitelist, "account is not white listed" );
+       eosio_assert( !st.can_freeze || !from.frozen, ACCOUNT_IS_FROZEN_BY_ISSUER);
+       eosio_assert( !st.can_freeze || !st.is_frozen, ALL_TRANSFERS_ARE_FROZEN_BY_ISSUER );
+       eosio_assert( !st.enforce_whitelist || from.whitelist, ACCOUNT_IS_NOT_WHITE_LISTED);
 
        from_acnts.modify( from, 0, [&]( auto& a ) {
            a.balance.amount -= value.amount;
@@ -83,12 +83,12 @@ using namespace eosio;
        accounts to_acnts( _contract, owner );
        auto to = to_acnts.find( value.symbol );
        if( to == to_acnts.end() ) {
-          eosio_assert( !st.enforce_whitelist, "can only transfer to white listed accounts" );
+          eosio_assert( !st.enforce_whitelist, CAN_ONLY_TRANSFER_TO_WHITE_LISTED_ACCOUNTS);
           to_acnts.emplace( ram_payer, [&]( auto& a ){
             a.balance = value;
           });
        } else {
-          eosio_assert( !st.enforce_whitelist || to->whitelist, "receiver requires whitelist by issuer" );
+          eosio_assert( !st.enforce_whitelist || to->whitelist, RECEIVER_REQUIRES_WHITELIST_BY_ISSUER );
           to_acnts.modify( to, 0, [&]( auto& a ) {
             a.balance.amount += value.amount;
           });
@@ -101,6 +101,10 @@ using namespace eosio;
         account_name owner=_approveobj.owner;
         account_name spender=_approveobj.spender;
         asset quantity=_approveobj.quantity;
+
+        accounts from_acnts( _contract, _approveobj.owner );
+        const auto& from = from_acnts.get( _approveobj.quantity.symbol);
+        eosio_assert( from.balance.amount >= _approveobj.quantity.amount, BLANCE_NOT_ENOUGH );
 
         approves approveobj(_contract, owner);
         if(approveobj.find(quantity.symbol.value) != approveobj.end()){
@@ -184,7 +188,7 @@ using namespace eosio;
                 while(approvetoPairIte != a.approved.end()){
 
                     if(approvetoPairIte->to == spender){
-                        eosio_assert(approvetoPairIte->value>=tfa.quantity.amount, NOT_ENOUGH_ALLOWED);
+                        eosio_assert(approvetoPairIte->value>=tfa.quantity.amount, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
                         approvetoPairIte->value -= quantity.amount;
 
                         auto sym = tfa.quantity.symbol.name();
@@ -192,8 +196,8 @@ using namespace eosio;
                         const auto& st = statstable.get( sym );
                         require_recipient( tfa.to );
 
-                        eosio_assert( tfa.quantity.is_valid(), "invalid quantity" );
-                        eosio_assert( tfa.quantity.amount > 0, "must transfer positive quantity" );
+                        eosio_assert( tfa.quantity.is_valid(),  INVALID_QUANTITY);
+                        eosio_assert( tfa.quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY);
                         sub_balance( tfa.from, tfa.quantity, st );
                         add_balance( tfa.to, tfa.quantity, st, tfa.to );
                         break;
@@ -201,21 +205,21 @@ using namespace eosio;
                     approvetoPairIte++;
                 }
                 if(approvetoPairIte == a.approved.end()){
-                    eosio_assert(false, NOT_ENOUGH_ALLOWED);
+                    eosio_assert(false, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
                 }
             });
         }else{
-            eosio_assert(false, NOT_ENOUGH_ALLOWED);
+            eosio_assert(false, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
         }
     }
 
     void currency::create_currency( const create& c ) {
       auto sym = c.maximum_supply.symbol;
-      eosio_assert( sym.is_valid(), "invalid symbol name" );
+      eosio_assert( sym.is_valid(), INVALID_SYMBOL_NAME);
 
        stats statstable( _contract, sym.name() );
        auto existing = statstable.find( sym.name() );
-       eosio_assert( existing == statstable.end(), "token with symbol already exists" );
+       eosio_assert( existing == statstable.end(), TOKEN_WITH_SYMBOL_ALREADY_EXISTS);
 
        statstable.emplace( c.issuer, [&]( auto& s ) {
           s.supply.symbol = c.maximum_supply.symbol;
