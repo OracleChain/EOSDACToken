@@ -8,66 +8,113 @@
  */
 #include "erc20currency.hpp"
 #include"../oc_askanswer/tool.hpp"
-namespace oct {
+//namespace oc {
 
    using std::string;
    using std::array;
 using namespace eosio;
-   /**
-    *  This contract enables the creation, issuance, and transfering of many different tokens.
-    *
-    */
-    void currency::on( const create& c ) {
-       require_auth( c.issuer );
-       create_currency( c );
-    }
 
-    void currency::on( const issue& i ) {
-       auto sym = i.quantity.symbol.name();
-       stats statstable( _contract, sym );
-       const auto& st = statstable.get( sym );
 
-       require_auth( st.issuer );
-       eosio_assert( i.quantity.is_valid(), INVALID_QUANTITY );
-       eosio_assert( i.quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
+    void currency::issue(account_name to,
+                         asset        quantity,
+                         string       memo) {
 
-       statstable.modify( st, 0, [&]( auto& s ) {
-          s.supply.amount += i.quantity.amount;
-       });
+        auto sym = quantity.symbol.name();
+        stats statstable( _contract, sym );
+        const auto& st = statstable.get( sym );
 
-       add_balance( st.issuer, i.quantity, st, st.issuer );
+        require_auth( st.issuer );
 
-       if( i.to != st.issuer )
-       {
-          inline_transfer( st.issuer, i.to, i.quantity, i.memo );
-       }
-    }
+        eosio_assert( quantity.is_valid(), INVALID_QUANTITY );
+        eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
 
-    void currency::on( const transfer& t ) {
-        if(has_auth(t.from)){
-          require_auth(t.from);
-        }
-        else
+        eosio_assert( quantity.symbol == st.supply.symbol, SYMBOL_PRECISION_MISMATCH);
+        eosio_assert( quantity.amount <= st.max_supply.amount - st.supply.amount, QUANTITY_EXCEEDS_AVAILABLE_SUPPLY);
+
+        statstable.modify( st, 0, [&]( auto& s ) {
+           s.supply.amount += quantity.amount;
+        });
+
+        add_balance( st.issuer, quantity, st, st.issuer );
+
+        if( to != st.issuer )
         {
-            eosio_assert( false, NSUFFICIENT_AUTHORITY);
+           inline_transfer( st.issuer, to, quantity, memo );
         }
-       auto sym = t.quantity.symbol.name();
-       stats statstable( _contract, sym );
-       const auto& st = statstable.get( sym );
+    }
 
-       require_recipient( t.to );
+    void currency::transferfee(
+            account_name from,
+            account_name to,
+            asset        quantity,
+            account_name tofeeadmin,
+            asset        feequantity,
+            string       memo){
 
-       eosio_assert( t.quantity.is_valid(), INVALID_QUANTITY );
-       eosio_assert( t.quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
-       sub_balance( t.from, t.quantity, st );
-       add_balance( t.to, t.quantity, st, t.from );
+             require_auth(from);
+
+              eosio_assert( from != to, CANNOT_TRANSFER_TO_YOURSELF);
+              eosio_assert( from != tofeeadmin, CANNOT_TRANSFER_TO_YOURSELF);
+
+              eosio_assert( is_account( to ), TO_ACCOUNT_DOES_NOT_EXIST);
+              eosio_assert( is_account( tofeeadmin ), TO_ACCOUNT_DOES_NOT_EXIST);
+
+              auto sym = quantity.symbol.name();
+              stats statstable( _contract, sym );
+              const auto& st = statstable.get( sym );
+
+              require_recipient( from );
+              require_recipient( to );
+              require_recipient( tofeeadmin );
+
+
+              eosio_assert( quantity.is_valid(), INVALID_QUANTITY );
+              eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
+              eosio_assert( quantity.symbol == st.supply.symbol,  SYMBOL_PRECISION_MISMATCH);
+
+
+              eosio_assert( feequantity.is_valid(), INVALID_QUANTITY );
+              eosio_assert( feequantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
+              eosio_assert( feequantity.symbol == st.supply.symbol,  SYMBOL_PRECISION_MISMATCH);
+
+              sub_balance( from, quantity, st );
+              add_balance( to, quantity, st, from );
+
+              sub_balance( from, feequantity, st );
+              add_balance( tofeeadmin, feequantity, st, from );
+    }
+
+    void currency::transfer(  account_name from,
+                              account_name to,
+                              asset        quantity,
+                              string       memo) {
+        require_auth(from);
+
+        eosio_assert( from != to, CANNOT_TRANSFER_TO_YOURSELF);
+        eosio_assert( is_account( to ), TO_ACCOUNT_DOES_NOT_EXIST);
+
+        auto sym = quantity.symbol.name();
+        stats statstable( _contract, sym );
+        const auto& st = statstable.get( sym );
+
+        require_recipient( from );
+        require_recipient( to );
+
+        eosio_assert( quantity.is_valid(), INVALID_QUANTITY );
+        eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
+        eosio_assert( quantity.symbol == st.supply.symbol,  SYMBOL_PRECISION_MISMATCH);
+
+        sub_balance( from, quantity, st );
+        add_balance( to, quantity, st, from );
     }
 
     void currency::sub_balance( account_name owner, asset value, const currency_stats& st ) {
-       accounts from_acnts( _contract, owner );
+       Accounts from_acnts( _contract, owner );
 
        const auto& from = from_acnts.get( value.symbol );
        eosio_assert( from.balance.amount >= value.amount, BLANCE_NOT_ENOUGH );
+
+       require_auth( owner );
 
        eosio_assert( !st.can_freeze || !from.frozen, ACCOUNT_IS_FROZEN_BY_ISSUER);
        eosio_assert( !st.can_freeze || !st.is_frozen, ALL_TRANSFERS_ARE_FROZEN_BY_ISSUER );
@@ -80,7 +127,7 @@ using namespace eosio;
 
     void currency::add_balance( account_name owner, asset value, const currency_stats& st, account_name ram_payer )
     {
-       accounts to_acnts( _contract, owner );
+       Accounts to_acnts( _contract, owner );
        auto to = to_acnts.find( value.symbol );
        if( to == to_acnts.end() ) {
           eosio_assert( !st.enforce_whitelist, CAN_ONLY_TRANSFER_TO_WHITE_LISTED_ACCOUNTS);
@@ -96,15 +143,18 @@ using namespace eosio;
     }
 
 
-    void currency::approve(const approveact & _approveobj){
-        require_auth(_approveobj.owner);
-        account_name owner=_approveobj.owner;
-        account_name spender=_approveobj.spender;
-        asset quantity=_approveobj.quantity;
+    void currency::approve(account_name owner,
+                           account_name spender,
+                           asset quantity){
 
-        accounts from_acnts( _contract, _approveobj.owner );
-        const auto& from = from_acnts.get( _approveobj.quantity.symbol);
-        eosio_assert( from.balance.amount >= _approveobj.quantity.amount, BLANCE_NOT_ENOUGH );
+        require_auth(owner);
+
+        eosio_assert( is_account( spender ), TO_ACCOUNT_DOES_NOT_EXIST);
+
+        Accounts from_acnts( _contract, owner );
+        const auto& from = from_acnts.get( quantity.symbol);
+        eosio_assert(quantity.amount>0, APPROVE_QUANTITY_MUST_POSITIVE);
+        eosio_assert( from.balance.amount >= quantity.amount, BLANCE_NOT_ENOUGH );
 
         approves approveobj(_contract, owner);
         if(approveobj.find(quantity.symbol.value) != approveobj.end()){
@@ -142,128 +192,104 @@ using namespace eosio;
         }
     }
 
-    void currency::balanceOf(const balanceOfAct & boa){
-        symbol_name sn = string_to_symbol(4, boa.symbol.c_str());
-        print("balanceOf[",boa.symbol.c_str(),"]", get_balance(boa.owner, sn));
+    void currency::balanceof(account_name owner,
+                             std::string  symbol){
+        symbol_name sn = string_to_symbol(4, symbol.c_str());
+        print("balanceof[",symbol.c_str(),"]", get_balance(owner, sn));
     }
 
 
-    uint64_t currency::allowanceOf(const allowanceOfAct & aof){
-        approves approveobj(_contract, aof.owner);
+    void currency::allowancex(account_name owner,
+                              account_name spender,
+                              std::string  symbol){
+        approves approveobj(_contract, owner);
 
-        if(approveobj.find(string_to_symbol(4, aof.symbol.c_str())) != approveobj.end()){
-            const auto &approSymIte = approveobj.get(string_to_symbol(4, aof.symbol.c_str()));
-            auto approvetoPairIte = approSymIte.approved.begin();
-            while(approvetoPairIte != approSymIte.approved.end()){
+         if(approveobj.find(string_to_symbol(4, symbol.c_str())) != approveobj.end()){
+             const auto &approSymIte = approveobj.get(string_to_symbol(4, symbol.c_str()));
+             auto approvetoPairIte = approSymIte.approved.begin();
+             while(approvetoPairIte != approSymIte.approved.end()){
 
-                if(approvetoPairIte->to == aof.spender){
-                    print("allowanceOf[", account_name(approvetoPairIte->to), "]=", approvetoPairIte->value);
-                    return approvetoPairIte->value;
-                }
-                approvetoPairIte++;
-            }
-            if(approvetoPairIte == approSymIte.approved.end()){
-                print("allowanceOf[", account_name(aof.spender), "]=", 0);
-            }
+                 if(approvetoPairIte->to == spender){
+                     print("allowanceof[", account_name(approvetoPairIte->to), "]=", approvetoPairIte->value);
+                     return;
+                 }
+                 approvetoPairIte++;
+             }
+             if(approvetoPairIte == approSymIte.approved.end()){
+                 print("allowanceOf[", account_name(spender), "]=", 0);
+             }
 
-        }else{
-            print("allowanceOf[", (account_name)aof.spender, "]=", 0);
-        }
-        return 0;
+         }else{
+             print("allowanceOf[", (account_name)spender, "]=", 0);
+         }
     }
 
-    void currency::transferFrom(const transferfromact& tfa){
-        require_auth(tfa.to);
+    void currency::transferfrom(account_name from,
+                                account_name to,
+                                asset quantity){
+        require_auth(to);
 
-        account_name owner=tfa.from;
-        account_name spender=tfa.to;
-        asset quantity=tfa.quantity;
+       account_name owner=from;
+       account_name spender=to;
 
-        approves approveobj(_contract, tfa.from);
-        if(approveobj.find(quantity.symbol.value) != approveobj.end()){
-            const auto &approSymIte = approveobj.get(quantity.symbol.value);
-            approveobj.modify(approSymIte, owner, [&](auto &a){
-                a = approSymIte;
-                auto approvetoPairIte = a.approved.begin();
-                while(approvetoPairIte != a.approved.end()){
+       approves approveobj(_contract, from);
+       if(approveobj.find(quantity.symbol.value) != approveobj.end()){
+           const auto &approSymIte = approveobj.get(quantity.symbol.value);
+           approveobj.modify(approSymIte, owner, [&](auto &a){
+               a = approSymIte;
+               auto approvetoPairIte = a.approved.begin();
+               while(approvetoPairIte != a.approved.end()){
 
-                    if(approvetoPairIte->to == spender){
-                        eosio_assert(approvetoPairIte->value>=tfa.quantity.amount, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
-                        approvetoPairIte->value -= quantity.amount;
+                   if(approvetoPairIte->to == spender){
+                       eosio_assert(approvetoPairIte->value>=quantity.amount, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
+                       approvetoPairIte->value -= quantity.amount;
 
-                        auto sym = tfa.quantity.symbol.name();
-                        stats statstable( _contract, sym );
-                        const auto& st = statstable.get( sym );
-                        require_recipient( tfa.to );
+                       auto sym = quantity.symbol.name();
+                       stats statstable( _contract, sym );
+                       const auto& st = statstable.get( sym );
+                       require_recipient( to );
 
-                        eosio_assert( tfa.quantity.is_valid(),  INVALID_QUANTITY);
-                        eosio_assert( tfa.quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY);
-                        sub_balance( tfa.from, tfa.quantity, st );
-                        add_balance( tfa.to, tfa.quantity, st, tfa.to );
-                        break;
-                    }
-                    approvetoPairIte++;
-                }
-                if(approvetoPairIte == a.approved.end()){
-                    eosio_assert(false, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
-                }
-            });
-        }else{
-            eosio_assert(false, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
-        }
+                       eosio_assert( quantity.is_valid(),  INVALID_QUANTITY);
+                       eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY);
+                       sub_balance( from, quantity, st );
+                       add_balance( to, quantity, st, to );
+                       break;
+                   }
+                   approvetoPairIte++;
+               }
+               if(approvetoPairIte == a.approved.end()){
+                   eosio_assert(false, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
+               }
+           });
+       }else{
+           eosio_assert(false, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
+       }
     }
 
-    void currency::create_currency( const create& c ) {
-      auto sym = c.maximum_supply.symbol;
+    void currency::create(       account_name           issuer,
+                                 asset                  maximum_supply,
+                                 uint8_t                issuer_can_freeze,
+                                 uint8_t                issuer_can_recall,
+                                 uint8_t                issuer_can_whitelist) {
+      require_auth( _contract );
+
+      auto sym = maximum_supply.symbol;
       eosio_assert( sym.is_valid(), INVALID_SYMBOL_NAME);
+      eosio_assert( maximum_supply.is_valid(), INVALID_QUANTITY);
+      eosio_assert( maximum_supply.amount>0, TOKEN_MAX_SUPPLY_MUST_POSITIVE) ;
 
        stats statstable( _contract, sym.name() );
        auto existing = statstable.find( sym.name() );
        eosio_assert( existing == statstable.end(), TOKEN_WITH_SYMBOL_ALREADY_EXISTS);
 
-       statstable.emplace( c.issuer, [&]( auto& s ) {
-          s.supply.symbol = c.maximum_supply.symbol;
-          s.max_supply    = c.maximum_supply;
-          s.issuer        = c.issuer;
-          s.can_freeze    = c.issuer_can_freeze;
-          s.can_recall    = c.issuer_can_recall;
-          s.can_whitelist = c.issuer_can_whitelist;
+
+
+       statstable.emplace( issuer, [&]( auto& s ) {
+          s.supply.symbol = maximum_supply.symbol;
+          s.max_supply    = maximum_supply;
+          s.issuer        = issuer;
+          s.can_freeze    = issuer_can_freeze;
+          s.can_recall    = issuer_can_recall;
+          s.can_whitelist = issuer_can_whitelist;
        });
     }
-
-    bool currency::apply( account_name contract, action_name act ) {
-       if( contract != _contract )
-          return false;
-
-       switch( act ) {
-          case N(issue):
-            on( unpack_action_data<issue>() );
-            return true;
-          case N(transfer):
-            on( unpack_action_data<transfer>() );
-            return true;
-          case N(create):
-            on( unpack_action_data<create>() );
-            return true;
-          case N(approve):
-            approve(unpack_action_data<approveact>());
-            return true;
-          case N(transferfrom):
-            transferFrom(unpack_action_data<transferfromact>());
-            return true;
-          case N(balanceof):
-            balanceOf(unpack_action_data<balanceOfAct>());
-            return true;
-          case N(allowanceof):
-           allowanceOf(unpack_action_data<allowanceOfAct>());
-           return true;
-       }
-       return false;
-    }
-}
-extern "C" {
-    /// The apply method implements the dispatch of events to this contract
-    void apply( uint64_t receiver, uint64_t code, uint64_t action ) {
-       oct::currency(receiver).apply( code, action );
-    }
-}

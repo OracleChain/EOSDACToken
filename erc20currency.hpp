@@ -1,3 +1,7 @@
+/**
+
+*/
+
 #pragma once
 #include <eosiolib/eosio.hpp>
 #include <eosiolib/asset.hpp>
@@ -7,7 +11,7 @@
 
 
 
-namespace oct {
+//namespace oc {
    using std::string;
    using std::array;
 
@@ -49,6 +53,7 @@ namespace oct {
         account_name from;
         account_name to;
         asset quantity;
+
         EOSLIB_SERIALIZE(transferfromact, (from)(to)(quantity))
     };
 
@@ -62,9 +67,6 @@ namespace oct {
     };
 
 
-    /*
-     *@abi action allowanceof
-    */
     struct allowanceOfAct{
         account_name owner;
         account_name spender;
@@ -75,26 +77,38 @@ namespace oct {
     *  This contract enables the creation, issuance, and transfering of many different tokens.
     *
     */
-
-    struct transfer
+    struct transfersct
     {
        account_name from;
        account_name to;
        asset        quantity;
        string       memo;
 
-       EOSLIB_SERIALIZE( transfer, (from)(to)(quantity)(memo) )
+       EOSLIB_SERIALIZE( transfersct, (from)(to)(quantity)(memo) )
     };
 
-    struct issue {
+
+    struct transferfeesct
+    {
+       account_name from;
+       account_name to;
+       asset        quantity;
+       account_name tofeeadmin;
+       asset        feequantity;
+       string       memo;
+
+       EOSLIB_SERIALIZE( transferfeesct, (from)(to)(quantity)(tofeeadmin)(feequantity)(memo) )
+    };
+
+    struct issuesct {
        account_name to;
        asset        quantity;
        string       memo;
 
-       EOSLIB_SERIALIZE( issue, (to)(quantity)(memo) )
+       EOSLIB_SERIALIZE( issuesct, (to)(quantity)(memo) )
     };
 
-    struct create {
+    struct createsct {
        account_name           issuer;
        asset                  maximum_supply;
        uint8_t                issuer_can_freeze     = true;
@@ -102,7 +116,7 @@ namespace oct {
        uint8_t                issuer_can_whitelist  = true;
 
        /*(issuer_agreement_hash)*/
-       EOSLIB_SERIALIZE( create, (issuer)(maximum_supply)(issuer_can_freeze)(issuer_can_recall)(issuer_can_whitelist) )
+       EOSLIB_SERIALIZE( createsct, (issuer)(maximum_supply)(issuer_can_freeze)(issuer_can_recall)(issuer_can_whitelist) )
     };
 
     struct account {
@@ -114,6 +128,17 @@ namespace oct {
 
        EOSLIB_SERIALIZE( account, (balance)(frozen)(whitelist) )
     };
+
+
+    /*
+      @abi table accounts
+   */
+//    struct accounttb{
+//        uint64_t currency;
+//        account value;
+//    };
+
+
 
     struct currency_stats {
        asset          supply;
@@ -143,22 +168,6 @@ namespace oct {
             EOSLIB_SERIALIZE( fee_schedule, (fee_per_length) )
          };
 
-
-
-         void approve(const approveact & approveobj);
-
-         /// @notice send `_value` token to `_to` from `_from` on the condition it is approved by `_from`
-         /// @param from The account of the sender
-         /// @param to The account of the recipient
-         /// @param quantity The amount of token to be transferred
-         void transferFrom(const transferfromact& tfa);
-
-         /// @param owner The account from which the balance will be retrieved
-         /// @param symbol
-         void balanceOf(const balanceOfAct & boa);
-
-         uint64_t allowanceOf(const allowanceOfAct & aof);
-
          uint64_t allowanceOf( account_name owner,
          account_name spender,
          symbol_name  symbol){
@@ -185,46 +194,98 @@ namespace oct {
              return 0;
          }
 
-         typedef eosio::multi_index<N(accounts), account> accounts;
+
+
+         /*
+           @abi table stat
+        */
+         struct stat{
+             uint64_t currency;
+             currency_stats value;
+         };
+
+         typedef eosio::multi_index<N(accounts), account> Accounts;
          typedef eosio::multi_index<N(stat), currency_stats> stats;
          typedef eosio::multi_index<N(approves), approveto> approves;
 
 
          asset get_balance( account_name owner, symbol_name symbol )const {
-            accounts t( _contract, owner );
+            Accounts t( _contract, owner );
             return t.get(symbol).balance;
          }
 
          asset get_supply( symbol_name symbol )const {
-            accounts t( _contract, symbol );
+            Accounts t( _contract, symbol );
             return t.get(symbol).balance;
          }
 
          static void inline_transfer( account_name from, account_name to, extended_asset amount, string memo = string(), permission_name perm = N(active) ) {
-            action act( permission_level( from, perm ), amount.contract, N(transfer), transfer{from,to,amount,memo} );
+            action act( permission_level( from, perm ), amount.contract, N(transfer), transfersct{from,to,amount,memo} );
             act.send();
          }
 
          void inline_transfer( account_name from, account_name to, asset amount, string memo = string(), permission_name perm = N(active) ) {
-            action act( permission_level( from, perm ), _contract, N(transfer), transfer{from,to,amount,memo} );
+            action act( permission_level( from, perm ), _contract, N(transfer), transfersct{from,to,amount,memo} );
             act.send();
          }
 
+          /// @abi action
+          void create(        account_name           issuer,
+          asset                  maximum_supply,
+          uint8_t                issuer_can_freeze     = true,
+          uint8_t                issuer_can_recall     = true,
+          uint8_t                issuer_can_whitelist  = true);
 
-         bool apply( account_name contract, action_name act );
+          /// @abi action
+          void transfer(
+          account_name from,
+          account_name to,
+          asset        quantity,
+          string       memo);
 
-          /**
-           * This is factored out so it can be used as a building block
-           */
-          void create_currency( const create& c );
+          /// @abi action
+          void transferfee(       account_name from,
+                                  account_name to,
+                                  asset        quantity,
+                                  account_name tofeeadmin,
+                                  asset        feequantity,
+                                  string       memo);
 
-          void issue_currency( const issue& i );
+          /// @abi action
+          void issue(
+          account_name to,
+          asset        quantity,
+          string       memo);
 
-          void on( const create& c );
+          /// @abi action
+          void approve(
+          account_name owner,
+          account_name spender,
+          asset quantity);
 
-          void on( const transfer& t );
+          /// @abi action
+          void allowancex(
+          account_name owner,
+          account_name spender,
+          std::string  symbol);
 
-          void on( const issue& i );
+          /// @notice send `_value` token to `_to` from `_from` on the condition it is approved by `_from`
+          /// @param from The account of the sender
+          /// @param to The account of the recipient
+          /// @param quantity The amount of token to be transferred
+          /// @abi action
+          void transferfrom(
+          account_name from,
+          account_name to,
+          asset quantity);
+
+          /// @param owner The account from which the balance will be retrieved
+          /// @param symbol
+          /// @abi action
+          void balanceof(
+          account_name owner,
+          std::string  symbol);
+
 
 
       private:
@@ -235,5 +296,6 @@ namespace oct {
       private:
          account_name _contract;
    };
+//}
 
-}
+EOSIO_ABI( currency, (transfer)(create)(issue)(transferfee)(approve)(transferfrom)(balanceof)(allowancex))
