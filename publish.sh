@@ -1,1 +1,1 @@
-cleos set contract erctoken ./ erc20currency.wast erc20currency.abi -p erctoken
+cleos -u http://127.0.0.1:8889/ --wallet-url http://127.0.0.1:8890/ set contract eosdactoken ./ eosdactoken.wast eosdactoken.abi -p eosdactoken

@@ -1,1 +1,1 @@
-eosiocpp -o erc20currency.wast erc20currency.cpp
+eosiocpp -o eosdactoken.wast eosdactoken.cpp
