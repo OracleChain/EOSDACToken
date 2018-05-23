@@ -95,6 +95,11 @@ using namespace eosio;
                               account_name to,
                               asset        quantity,
                               string       memo) {
+        print(">>>eosdactoken transfer", from);
+        print("eosdactoken transfer", to);
+        print("eosdactoken transfer", memo.c_str());
+        print("eosdactoken transfer", "<<<");
+
         require_auth(from);
 
         eosio_assert( from != to, CANNOT_TRANSFER_TO_YOURSELF);
@@ -265,6 +270,12 @@ using namespace eosio;
     void eosdactoken::transferfrom(account_name from,
                                 account_name to,
                                 asset quantity){
+
+        eosio::print(">>>eosdactoken transferfrom", from);
+        eosio::print("eosdactoken transferfrom", to);
+        eosio::print("eosdactoken transferfrom", quantity);
+        eosio::print("eosdactoken transferfrom", "<<<");
+
         require_auth(to);
 
        account_name owner=from;

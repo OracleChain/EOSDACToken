@@ -42,7 +42,7 @@
  (table 9 9 anyfunc)
  (elem (i32.const 0) $__wasm_nullptr $_ZN11eosdactoken11transferfeeEyyN5eosio5assetEyS1_NSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE $_ZN11eosdactoken9balanceofEyNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE $_ZN11eosdactoken9allowanceEyyNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE $_ZN11eosdactoken5issueEyN5eosio5assetENSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE $_ZN11eosdactoken8transferEyyN5eosio5assetENSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE $_ZN11eosdactoken7approveEyyN5eosio5assetE $_ZN11eosdactoken12transferfromEyyN5eosio5assetE $_ZN11eosdactoken6createEyN5eosio5assetEhhh)
  (memory $0 1)
- (data (i32.const 4) "Ph\00\00")
+ (data (i32.const 4) "\e0h\00\00")
  (data (i32.const 16) "onerror\00")
  (data (i32.const 32) "eosio\00")
  (data (i32.const 48) "onerror action\'s are only valid from the \"eosio\" system account\00")
@@ -61,36 +61,41 @@
  (data (i32.const 384) ",\00")
  (data (i32.const 400) "magnitude of asset amount must be less than 2^62\00")
  (data (i32.const 464) "invalid symbol name\00")
- (data (i32.const 496) "6000017 NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT\00")
- (data (i32.const 544) "object passed to modify is not in multi_index\00")
- (data (i32.const 592) "cannot modify objects in table of another contract\00")
- (data (i32.const 656) "6000018 INVALID_QUANTITY\00")
- (data (i32.const 688) "6000019 MUST_ISSUE_POSITIVE_QUANTITY\00")
- (data (i32.const 736) "updater cannot change primary key when modifying an object\00")
- (data (i32.const 800) "write\00")
- (data (i32.const 816) "cannot pass end iterator to modify\00")
- (data (i32.const 864) "attempt to add asset with different symbol\00")
- (data (i32.const 912) "addition underflow\00")
- (data (i32.const 944) "addition overflow\00")
- (data (i32.const 976) "cannot create objects in table of another contract\00")
- (data (i32.const 1040) "6000002 BLANCE_NOT_ENOUGH\00")
- (data (i32.const 1072) "attempt to subtract asset with different symbol\00")
- (data (i32.const 1120) "subtraction underflow\00")
- (data (i32.const 1152) "subtraction overflow\00")
- (data (i32.const 1184) "object passed to erase is not in multi_index\00")
- (data (i32.const 1232) "cannot erase objects in table of another contract\00")
- (data (i32.const 1296) "attempt to remove object that was not in multi_index\00")
- (data (i32.const 1360) "6000031 TO_ACCOUNT_DOES_NOT_EXIST\00")
- (data (i32.const 1408) "6000033 APPROVE_QUANTITY_MUST_POSITIVE\00")
- (data (i32.const 1456) "6000030 CANNOT_TRANSFER_TO_YOURSELF\00")
- (data (i32.const 1504) "6000032 SYMBOL_PRECISION_MISMATCH\00")
- (data (i32.const 1552) "6000026 INVALID_SYMBOL_NAME\00")
- (data (i32.const 1584) "6000035 TOKEN_WITH_SYMBOL_DOES_NOT_EXIST_CREATE_TOKEN_BEFORE_ISSUE\00")
- (data (i32.const 1664) "6000034 QUANTITY_EXCEEDS_AVAILABLE_SUPPLY\00")
- (data (i32.const 1712) "active\00")
- (data (i32.const 1728) "6000029 TOKEN_MAX_SUPPLY_MUST_POSITIVE\00")
- (data (i32.const 1776) "6000027 TOKEN_WITH_SYMBOL_ALREADY_EXISTS\00")
- (data (i32.const 10224) "malloc_from_freed was designed to only be called after _heap was completely allocated\00")
+ (data (i32.const 496) ">>>eosdactoken transferfrom\00")
+ (data (i32.const 528) "eosdactoken transferfrom\00")
+ (data (i32.const 560) "<<<\00")
+ (data (i32.const 576) "6000017 NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT\00")
+ (data (i32.const 624) "object passed to modify is not in multi_index\00")
+ (data (i32.const 672) "cannot modify objects in table of another contract\00")
+ (data (i32.const 736) "6000018 INVALID_QUANTITY\00")
+ (data (i32.const 768) "6000019 MUST_ISSUE_POSITIVE_QUANTITY\00")
+ (data (i32.const 816) "updater cannot change primary key when modifying an object\00")
+ (data (i32.const 880) "write\00")
+ (data (i32.const 896) "cannot pass end iterator to modify\00")
+ (data (i32.const 944) "attempt to add asset with different symbol\00")
+ (data (i32.const 992) "addition underflow\00")
+ (data (i32.const 1024) "addition overflow\00")
+ (data (i32.const 1056) "cannot create objects in table of another contract\00")
+ (data (i32.const 1120) "6000002 BLANCE_NOT_ENOUGH\00")
+ (data (i32.const 1152) "attempt to subtract asset with different symbol\00")
+ (data (i32.const 1200) "subtraction underflow\00")
+ (data (i32.const 1232) "subtraction overflow\00")
+ (data (i32.const 1264) "object passed to erase is not in multi_index\00")
+ (data (i32.const 1312) "cannot erase objects in table of another contract\00")
+ (data (i32.const 1376) "attempt to remove object that was not in multi_index\00")
+ (data (i32.const 1440) "6000031 TO_ACCOUNT_DOES_NOT_EXIST\00")
+ (data (i32.const 1488) "6000033 APPROVE_QUANTITY_MUST_POSITIVE\00")
+ (data (i32.const 1536) "6000030 CANNOT_TRANSFER_TO_YOURSELF\00")
+ (data (i32.const 1584) "6000032 SYMBOL_PRECISION_MISMATCH\00")
+ (data (i32.const 1632) "6000026 INVALID_SYMBOL_NAME\00")
+ (data (i32.const 1664) "6000035 TOKEN_WITH_SYMBOL_DOES_NOT_EXIST_CREATE_TOKEN_BEFORE_ISSUE\00")
+ (data (i32.const 1744) "6000034 QUANTITY_EXCEEDS_AVAILABLE_SUPPLY\00")
+ (data (i32.const 1792) "active\00")
+ (data (i32.const 1808) "6000029 TOKEN_MAX_SUPPLY_MUST_POSITIVE\00")
+ (data (i32.const 1856) "6000027 TOKEN_WITH_SYMBOL_ALREADY_EXISTS\00")
+ (data (i32.const 1904) ">>>eosdactoken transfer\00")
+ (data (i32.const 1936) "eosdactoken transfer\00")
+ (data (i32.const 10368) "malloc_from_freed was designed to only be called after _heap was completely allocated\00")
  (export "memory" (memory $0))
  (export "_ZeqRK11checksum256S1_" (func $_ZeqRK11checksum256S1_))
  (export "_ZeqRK11checksum160S1_" (func $_ZeqRK11checksum160S1_))
@@ -1189,10 +1194,9 @@
   (local $8 i32)
   (local $9 i64)
   (local $10 i32)
-  (local $11 i32)
   (i32.store offset=4
    (i32.const 0)
-   (tee_local $11
+   (tee_local $10
     (i32.sub
      (i32.load offset=4
       (i32.const 0)
@@ -1200,6 +1204,54 @@
      (i32.const 112)
     )
    )
+  )
+  (call $prints
+   (i32.const 1904)
+  )
+  (call $printui
+   (get_local $1)
+  )
+  (call $prints
+   (i32.const 1936)
+  )
+  (call $printui
+   (get_local $2)
+  )
+  (block $label$0
+   (block $label$1
+    (br_if $label$1
+     (i32.and
+      (i32.load8_u
+       (get_local $4)
+      )
+      (i32.const 1)
+     )
+    )
+    (set_local $4
+     (i32.add
+      (get_local $4)
+      (i32.const 1)
+     )
+    )
+    (br $label$0)
+   )
+   (set_local $4
+    (i32.load offset=8
+     (get_local $4)
+    )
+   )
+  )
+  (call $prints
+   (i32.const 1936)
+  )
+  (call $prints
+   (get_local $4)
+  )
+  (call $prints
+   (i32.const 1936)
+  )
+  (call $prints
+   (i32.const 560)
   )
   (call $require_auth
    (get_local $1)
@@ -1209,13 +1261,13 @@
     (get_local $1)
     (get_local $2)
    )
-   (i32.const 1456)
+   (i32.const 1536)
   )
   (call $eosio_assert
    (call $is_account
     (get_local $2)
    )
-   (i32.const 1360)
+   (i32.const 1440)
   )
   (set_local $5
    (i64.load offset=8
@@ -1227,13 +1279,13 @@
   )
   (i32.store
    (i32.add
-    (get_local $11)
+    (get_local $10)
     (i32.const 104)
    )
    (i32.const 0)
   )
   (i64.store offset=80
-   (get_local $11)
+   (get_local $10)
    (tee_local $9
     (i64.shr_u
      (get_local $5)
@@ -1242,15 +1294,15 @@
    )
   )
   (i64.store offset=88
-   (get_local $11)
+   (get_local $10)
    (i64.const -1)
   )
   (i64.store offset=96
-   (get_local $11)
+   (get_local $10)
    (i64.const 0)
   )
   (i64.store offset=72
-   (get_local $11)
+   (get_local $10)
    (i64.load
     (get_local $0)
    )
@@ -1258,7 +1310,7 @@
   (set_local $6
    (call $_ZNK5eosio11multi_indexILy14289248716530384896E8curstatsJEE3getEyPKc
     (i32.add
-     (get_local $11)
+     (get_local $10)
      (i32.const 72)
     )
     (get_local $9)
@@ -1271,8 +1323,8 @@
   (call $require_recipient
    (get_local $2)
   )
-  (block $label$0
-   (br_if $label$0
+  (block $label$2
+   (br_if $label$2
     (i64.gt_u
      (i64.add
       (tee_local $7
@@ -1285,12 +1337,12 @@
      (i64.const 9223372036854775806)
     )
    )
-   (set_local $10
+   (set_local $4
     (i32.const 0)
    )
-   (block $label$1
-    (loop $label$2
-     (br_if $label$1
+   (block $label$3
+    (loop $label$4
+     (br_if $label$3
       (i32.gt_u
        (i32.add
         (i32.shl
@@ -1304,8 +1356,8 @@
        (i32.const 452984830)
       )
      )
-     (block $label$3
-      (br_if $label$3
+     (block $label$5
+      (br_if $label$5
        (i64.ne
         (i64.and
          (tee_local $9
@@ -1319,8 +1371,8 @@
         (i64.const 0)
        )
       )
-      (loop $label$4
-       (br_if $label$1
+      (loop $label$6
+       (br_if $label$3
         (i64.ne
          (i64.and
           (tee_local $9
@@ -1334,11 +1386,11 @@
          (i64.const 0)
         )
        )
-       (br_if $label$4
+       (br_if $label$6
         (i32.lt_s
-         (tee_local $10
+         (tee_local $4
           (i32.add
-           (get_local $10)
+           (get_local $4)
            (i32.const 1)
           )
          )
@@ -1350,18 +1402,18 @@
      (set_local $8
       (i32.const 1)
      )
-     (br_if $label$2
+     (br_if $label$4
       (i32.lt_s
-       (tee_local $10
+       (tee_local $4
         (i32.add
-         (get_local $10)
+         (get_local $4)
          (i32.const 1)
         )
        )
        (i32.const 7)
       )
      )
-     (br $label$0)
+     (br $label$2)
     )
    )
    (set_local $8
@@ -1370,14 +1422,14 @@
   )
   (call $eosio_assert
    (get_local $8)
-   (i32.const 656)
+   (i32.const 736)
   )
   (call $eosio_assert
    (i64.gt_s
     (get_local $7)
     (i64.const 0)
    )
-   (i32.const 688)
+   (i32.const 768)
   )
   (call $eosio_assert
    (i64.eq
@@ -1386,13 +1438,13 @@
      (get_local $6)
     )
    )
-   (i32.const 1504)
+   (i32.const 1584)
   )
   (i64.store
-   (tee_local $10
+   (tee_local $4
     (i32.add
      (i32.add
-      (get_local $11)
+      (get_local $10)
       (i32.const 56)
      )
      (i32.const 8)
@@ -1415,7 +1467,7 @@
   (i32.store
    (i32.add
     (i32.add
-     (get_local $11)
+     (get_local $10)
      (i32.const 24)
     )
     (i32.const 12)
@@ -1423,7 +1475,7 @@
    (i32.load
     (i32.add
      (i32.add
-      (get_local $11)
+      (get_local $10)
       (i32.const 56)
      )
      (i32.const 12)
@@ -1433,45 +1485,45 @@
   (i32.store
    (i32.add
     (i32.add
-     (get_local $11)
+     (get_local $10)
      (i32.const 24)
     )
     (i32.const 8)
    )
    (i32.load
-    (get_local $10)
+    (get_local $4)
    )
   )
   (i64.store offset=56
-   (get_local $11)
+   (get_local $10)
    (get_local $9)
   )
   (i32.store offset=28
-   (get_local $11)
+   (get_local $10)
    (i32.load offset=60
-    (get_local $11)
+    (get_local $10)
    )
   )
   (i32.store offset=24
-   (get_local $11)
+   (get_local $10)
    (i32.load offset=56
-    (get_local $11)
+    (get_local $10)
    )
   )
   (call $_ZN11eosdactoken11sub_balanceEyN5eosio5assetERK8curstats
    (get_local $0)
    (get_local $1)
    (i32.add
-    (get_local $11)
+    (get_local $10)
     (i32.const 24)
    )
-   (get_local $10)
+   (get_local $4)
   )
   (i64.store
-   (tee_local $10
+   (tee_local $4
     (i32.add
      (i32.add
-      (get_local $11)
+      (get_local $10)
       (i32.const 40)
      )
      (i32.const 8)
@@ -1489,7 +1541,7 @@
   (i32.store
    (i32.add
     (i32.add
-     (get_local $11)
+     (get_local $10)
      (i32.const 8)
     )
     (i32.const 12)
@@ -1497,7 +1549,7 @@
    (i32.load
     (i32.add
      (i32.add
-      (get_local $11)
+      (get_local $10)
       (i32.const 40)
      )
      (i32.const 12)
@@ -1507,60 +1559,60 @@
   (i32.store
    (i32.add
     (i32.add
-     (get_local $11)
+     (get_local $10)
      (i32.const 8)
     )
     (i32.const 8)
    )
    (i32.load
-    (get_local $10)
+    (get_local $4)
    )
   )
   (i64.store offset=40
-   (get_local $11)
+   (get_local $10)
    (get_local $9)
   )
   (i32.store offset=12
-   (get_local $11)
+   (get_local $10)
    (i32.load offset=44
-    (get_local $11)
+    (get_local $10)
    )
   )
   (i32.store offset=8
-   (get_local $11)
+   (get_local $10)
    (i32.load offset=40
-    (get_local $11)
+    (get_local $10)
    )
   )
   (call $_ZN11eosdactoken11add_balanceEyN5eosio5assetERK8curstatsy
    (get_local $0)
    (get_local $2)
    (i32.add
-    (get_local $11)
+    (get_local $10)
     (i32.const 8)
    )
-   (get_local $10)
+   (get_local $4)
    (get_local $1)
   )
-  (block $label$5
-   (br_if $label$5
+  (block $label$7
+   (br_if $label$7
     (i32.eqz
      (tee_local $8
       (i32.load offset=96
-       (get_local $11)
+       (get_local $10)
       )
      )
     )
    )
-   (block $label$6
-    (block $label$7
-     (br_if $label$7
+   (block $label$8
+    (block $label$9
+     (br_if $label$9
       (i32.eq
-       (tee_local $10
+       (tee_local $4
         (i32.load
          (tee_local $0
           (i32.add
-           (get_local $11)
+           (get_local $10)
            (i32.const 100)
           )
          )
@@ -1569,23 +1621,23 @@
        (get_local $8)
       )
      )
-     (loop $label$8
+     (loop $label$10
       (set_local $3
        (i32.load
-        (tee_local $10
+        (tee_local $4
          (i32.add
-          (get_local $10)
+          (get_local $4)
           (i32.const -24)
          )
         )
        )
       )
       (i32.store
-       (get_local $10)
+       (get_local $4)
        (i32.const 0)
       )
-      (block $label$9
-       (br_if $label$9
+      (block $label$11
+       (br_if $label$11
         (i32.eqz
          (get_local $3)
         )
@@ -1594,24 +1646,24 @@
         (get_local $3)
        )
       )
-      (br_if $label$8
+      (br_if $label$10
        (i32.ne
         (get_local $8)
-        (get_local $10)
+        (get_local $4)
        )
       )
      )
-     (set_local $10
+     (set_local $4
       (i32.load
        (i32.add
-        (get_local $11)
+        (get_local $10)
         (i32.const 96)
        )
       )
      )
-     (br $label$6)
+     (br $label$8)
     )
-    (set_local $10
+    (set_local $4
      (get_local $8)
     )
    )
@@ -1620,13 +1672,13 @@
     (get_local $8)
    )
    (call $_ZdlPv
-    (get_local $10)
+    (get_local $4)
    )
   )
   (i32.store offset=4
    (i32.const 0)
    (i32.add
-    (get_local $11)
+    (get_local $10)
     (i32.const 112)
    )
   )
@@ -2058,7 +2110,7 @@
   )
   (call $eosio_assert
    (get_local $9)
-   (i32.const 1552)
+   (i32.const 1632)
   )
   (set_local $9
    (i32.const 0)
@@ -2165,14 +2217,14 @@
   )
   (call $eosio_assert
    (get_local $9)
-   (i32.const 656)
+   (i32.const 736)
   )
   (call $eosio_assert
    (i64.gt_s
     (get_local $8)
     (i64.const 0)
    )
-   (i32.const 1728)
+   (i32.const 1808)
   )
   (i32.store
    (i32.add
@@ -2239,7 +2291,7 @@
   )
   (call $eosio_assert
    (get_local $11)
-   (i32.const 1776)
+   (i32.const 1856)
   )
   (call $eosio_assert
    (i64.eq
@@ -2248,7 +2300,7 @@
     )
     (call $current_receiver)
    )
-   (i32.const 976)
+   (i32.const 1056)
   )
   (set_local $9
    (call $_ZN8curstatsC2Ev
@@ -3128,7 +3180,7 @@
   )
   (call $eosio_assert
    (get_local $6)
-   (i32.const 1552)
+   (i32.const 1632)
   )
   (set_local $9
    (i32.const 0)
@@ -3203,7 +3255,7 @@
     (get_local $6)
     (i32.const 0)
    )
-   (i32.const 1584)
+   (i32.const 1664)
   )
   (call $require_auth
    (i64.load offset=32
@@ -3309,14 +3361,14 @@
   )
   (call $eosio_assert
    (get_local $9)
-   (i32.const 656)
+   (i32.const 736)
   )
   (call $eosio_assert
    (i64.gt_s
     (get_local $7)
     (i64.const 0)
    )
-   (i32.const 688)
+   (i32.const 768)
   )
   (call $eosio_assert
    (i64.eq
@@ -3325,7 +3377,7 @@
      (get_local $6)
     )
    )
-   (i32.const 1504)
+   (i32.const 1584)
   )
   (call $eosio_assert
    (i64.le_s
@@ -3339,7 +3391,7 @@
      )
     )
    )
-   (i32.const 1664)
+   (i32.const 1744)
   )
   (call $eosio_assert
    (i32.eq
@@ -3351,7 +3403,7 @@
      (i32.const 88)
     )
    )
-   (i32.const 544)
+   (i32.const 624)
   )
   (call $eosio_assert
    (i64.eq
@@ -3360,7 +3412,7 @@
     )
     (call $current_receiver)
    )
-   (i32.const 592)
+   (i32.const 672)
   )
   (i64.store
    (get_local $6)
@@ -3378,7 +3430,7 @@
   )
   (call $eosio_assert
    (i32.const 1)
-   (i32.const 736)
+   (i32.const 816)
   )
   (i32.store offset=184
    (get_local $13)
@@ -3541,7 +3593,7 @@
     (i64.const 59)
    )
    (set_local $8
-    (i32.const 1712)
+    (i32.const 1792)
    )
    (set_local $11
     (i64.const 0)
@@ -4396,26 +4448,26 @@
     (get_local $1)
     (get_local $2)
    )
-   (i32.const 1456)
+   (i32.const 1536)
   )
   (call $eosio_assert
    (i64.ne
     (get_local $1)
     (get_local $4)
    )
-   (i32.const 1456)
+   (i32.const 1536)
   )
   (call $eosio_assert
    (call $is_account
     (get_local $2)
    )
-   (i32.const 1360)
+   (i32.const 1440)
   )
   (call $eosio_assert
    (call $is_account
     (get_local $4)
    )
-   (i32.const 1360)
+   (i32.const 1440)
   )
   (set_local $7
    (i64.load offset=8
@@ -4576,14 +4628,14 @@
   )
   (call $eosio_assert
    (get_local $11)
-   (i32.const 656)
+   (i32.const 736)
   )
   (call $eosio_assert
    (i64.gt_s
     (get_local $9)
     (i64.const 0)
    )
-   (i32.const 688)
+   (i32.const 768)
   )
   (call $eosio_assert
    (i64.eq
@@ -4592,7 +4644,7 @@
      (get_local $8)
     )
    )
-   (i32.const 1504)
+   (i32.const 1584)
   )
   (set_local $7
    (i64.load offset=8
@@ -4704,14 +4756,14 @@
   )
   (call $eosio_assert
    (get_local $12)
-   (i32.const 656)
+   (i32.const 736)
   )
   (call $eosio_assert
    (i64.gt_s
     (get_local $9)
     (i64.const 0)
    )
-   (i32.const 688)
+   (i32.const 768)
   )
   (call $eosio_assert
    (i64.eq
@@ -4723,7 +4775,7 @@
      )
     )
    )
-   (i32.const 1504)
+   (i32.const 1584)
   )
   (i64.store
    (tee_local $13
@@ -5303,7 +5355,7 @@
    (call $is_account
     (get_local $2)
    )
-   (i32.const 1360)
+   (i32.const 1440)
   )
   (i32.store
    (i32.add
@@ -5387,7 +5439,7 @@
     )
     (i64.const 0)
    )
-   (i32.const 1408)
+   (i32.const 1488)
   )
   (call $eosio_assert
    (i64.ge_s
@@ -5396,7 +5448,7 @@
     )
     (get_local $2)
    )
-   (i32.const 1040)
+   (i32.const 1120)
   )
   (i32.store
    (i32.add
@@ -5647,7 +5699,7 @@
           )
           (call $current_receiver)
          )
-         (i32.const 976)
+         (i32.const 1056)
         )
         (i32.store offset=148
          (get_local $8)
@@ -5824,7 +5876,7 @@
         (get_local $0)
         (i32.const 0)
        )
-       (i32.const 816)
+       (i32.const 896)
       )
       (call $_ZN5eosio11multi_indexILy3849304916564639744E9approvetoJEE6modifyIZN11eosdactoken7approveEyyNS_5assetEE3$_7EEvRKS1_yOT_
        (i32.add
@@ -6554,6 +6606,30 @@
    (get_local $7)
    (get_local $2)
   )
+  (call $prints
+   (i32.const 496)
+  )
+  (call $printui
+   (get_local $1)
+  )
+  (call $prints
+   (i32.const 528)
+  )
+  (call $printui
+   (get_local $2)
+  )
+  (call $prints
+   (i32.const 528)
+  )
+  (call $_ZNK5eosio5asset5printEv
+   (get_local $3)
+  )
+  (call $prints
+   (i32.const 528)
+  )
+  (call $prints
+   (i32.const 560)
+  )
   (call $require_auth
    (get_local $2)
   )
@@ -6700,7 +6776,7 @@
     )
     (call $eosio_assert
      (i32.const 0)
-     (i32.const 496)
+     (i32.const 576)
     )
     (br_if $label$0
      (i32.eqz
@@ -12060,7 +12136,7 @@
     )
     (get_local $0)
    )
-   (i32.const 544)
+   (i32.const 624)
   )
   (call $eosio_assert
    (i64.eq
@@ -12069,7 +12145,7 @@
     )
     (call $current_receiver)
    )
-   (i32.const 592)
+   (i32.const 672)
   )
   (set_local $10
    (i64.load
@@ -12186,7 +12262,7 @@
        )
       )
      )
-     (i32.const 496)
+     (i32.const 576)
     )
     (i64.store
      (get_local $8)
@@ -12367,7 +12443,7 @@
     )
     (call $eosio_assert
      (get_local $7)
-     (i32.const 656)
+     (i32.const 736)
     )
     (call $eosio_assert
      (i64.gt_s
@@ -12383,7 +12459,7 @@
       )
       (i64.const 0)
      )
-     (i32.const 688)
+     (i32.const 768)
     )
     (set_local $10
      (i64.load
@@ -12653,7 +12729,7 @@
    )
    (call $eosio_assert
     (i32.const 0)
-    (i32.const 496)
+    (i32.const 576)
    )
   )
   (call $eosio_assert
@@ -12666,7 +12742,7 @@
      (i64.const 8)
     )
    )
-   (i32.const 736)
+   (i32.const 816)
   )
   (set_local $9
    (i32.const 8)
@@ -12784,7 +12860,7 @@
     (get_local $9)
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -13347,7 +13423,7 @@
      )
     )
    )
-   (i32.const 1040)
+   (i32.const 1120)
   )
   (block $label$0
    (block $label$1
@@ -13386,7 +13462,7 @@
        (i32.const 8)
       )
      )
-     (i32.const 544)
+     (i32.const 624)
     )
     (call $eosio_assert
      (i64.eq
@@ -13395,7 +13471,7 @@
       )
       (call $current_receiver)
      )
-     (i32.const 592)
+     (i32.const 672)
     )
     (call $eosio_assert
      (i64.eq
@@ -13406,7 +13482,7 @@
        )
       )
      )
-     (i32.const 1072)
+     (i32.const 1152)
     )
     (i64.store
      (get_local $0)
@@ -13424,7 +13500,7 @@
       (get_local $1)
       (i64.const -4611686018427387904)
      )
-     (i32.const 1120)
+     (i32.const 1200)
     )
     (call $eosio_assert
      (i64.lt_s
@@ -13433,7 +13509,7 @@
       )
       (i64.const 4611686018427387904)
      )
-     (i32.const 1152)
+     (i32.const 1232)
     )
     (call $eosio_assert
      (i64.eq
@@ -13450,11 +13526,11 @@
        (i64.const 8)
       )
      )
-     (i32.const 736)
+     (i32.const 816)
     )
     (call $eosio_assert
      (i32.const 1)
-     (i32.const 800)
+     (i32.const 880)
     )
     (drop
      (call $memcpy
@@ -13468,7 +13544,7 @@
     )
     (call $eosio_assert
      (i32.const 1)
-     (i32.const 800)
+     (i32.const 880)
     )
     (drop
      (call $memcpy
@@ -13711,7 +13787,7 @@
       )
       (call $eosio_assert
        (i32.const 1)
-       (i32.const 816)
+       (i32.const 896)
       )
       (call $eosio_assert
        (i32.eq
@@ -13723,7 +13799,7 @@
          (i32.const 8)
         )
        )
-       (i32.const 544)
+       (i32.const 624)
       )
       (call $eosio_assert
        (i64.eq
@@ -13732,7 +13808,7 @@
         )
         (call $current_receiver)
        )
-       (i32.const 592)
+       (i32.const 672)
       )
       (call $eosio_assert
        (i64.eq
@@ -13743,7 +13819,7 @@
          )
         )
        )
-       (i32.const 864)
+       (i32.const 944)
       )
       (i64.store
        (get_local $8)
@@ -13763,7 +13839,7 @@
         (get_local $4)
         (i64.const -4611686018427387904)
        )
-       (i32.const 912)
+       (i32.const 992)
       )
       (call $eosio_assert
        (i64.lt_s
@@ -13772,7 +13848,7 @@
         )
         (i64.const 4611686018427387904)
        )
-       (i32.const 944)
+       (i32.const 1024)
       )
       (call $eosio_assert
        (i64.eq
@@ -13789,11 +13865,11 @@
          (i64.const 8)
         )
        )
-       (i32.const 736)
+       (i32.const 816)
       )
       (call $eosio_assert
        (i32.const 1)
-       (i32.const 800)
+       (i32.const 880)
       )
       (drop
        (call $memcpy
@@ -13807,7 +13883,7 @@
       )
       (call $eosio_assert
        (i32.const 1)
-       (i32.const 800)
+       (i32.const 880)
       )
       (drop
        (call $memcpy
@@ -13875,7 +13951,7 @@
        )
        (call $current_receiver)
       )
-      (i32.const 976)
+      (i32.const 1056)
      )
      (i64.store offset=8
       (tee_local $0
@@ -14013,7 +14089,7 @@
      )
      (call $eosio_assert
       (i32.const 1)
-      (i32.const 800)
+      (i32.const 880)
      )
      (drop
       (call $memcpy
@@ -14027,7 +14103,7 @@
      )
      (call $eosio_assert
       (i32.const 1)
-      (i32.const 800)
+      (i32.const 880)
      )
      (drop
       (call $memcpy
@@ -14373,7 +14449,7 @@
      )
      (i32.const 0)
     )
-    (i32.const 800)
+    (i32.const 880)
    )
    (drop
     (call $memcpy
@@ -14447,7 +14523,7 @@
       )
       (i32.const 7)
      )
-     (i32.const 800)
+     (i32.const 880)
     )
     (drop
      (call $memcpy
@@ -14479,7 +14555,7 @@
       )
       (i32.const 7)
      )
-     (i32.const 800)
+     (i32.const 880)
     )
     (drop
      (call $memcpy
@@ -14541,7 +14617,7 @@
     )
     (get_local $0)
    )
-   (i32.const 1184)
+   (i32.const 1264)
   )
   (call $eosio_assert
    (i64.eq
@@ -14550,7 +14626,7 @@
     )
     (call $current_receiver)
    )
-   (i32.const 1232)
+   (i32.const 1312)
   )
   (block $label$0
    (br_if $label$0
@@ -14630,7 +14706,7 @@
     (get_local $7)
     (get_local $3)
    )
-   (i32.const 1296)
+   (i32.const 1376)
   )
   (set_local $8
    (i32.add
@@ -16039,7 +16115,7 @@
     )
     (get_local $0)
    )
-   (i32.const 544)
+   (i32.const 624)
   )
   (call $eosio_assert
    (i64.eq
@@ -16048,7 +16124,7 @@
     )
     (call $current_receiver)
    )
-   (i32.const 592)
+   (i32.const 672)
   )
   (set_local $5
    (i32.add
@@ -16216,7 +16292,7 @@
      (i64.const 8)
     )
    )
-   (i32.const 736)
+   (i32.const 816)
   )
   (set_local $9
    (i32.const 8)
@@ -16331,7 +16407,7 @@
     (get_local $9)
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -16805,7 +16881,7 @@
     (get_local $7)
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -17888,7 +17964,7 @@
      )
     )
    )
-   (i32.const 1040)
+   (i32.const 1120)
   )
   (block $label$0
    (block $label$1
@@ -17927,7 +18003,7 @@
        (i32.const 8)
       )
      )
-     (i32.const 544)
+     (i32.const 624)
     )
     (call $eosio_assert
      (i64.eq
@@ -17936,7 +18012,7 @@
       )
       (call $current_receiver)
      )
-     (i32.const 592)
+     (i32.const 672)
     )
     (call $eosio_assert
      (i64.eq
@@ -17947,7 +18023,7 @@
        )
       )
      )
-     (i32.const 1072)
+     (i32.const 1152)
     )
     (i64.store
      (get_local $0)
@@ -17965,7 +18041,7 @@
       (get_local $5)
       (i64.const -4611686018427387904)
      )
-     (i32.const 1120)
+     (i32.const 1200)
     )
     (call $eosio_assert
      (i64.lt_s
@@ -17974,7 +18050,7 @@
       )
       (i64.const 4611686018427387904)
      )
-     (i32.const 1152)
+     (i32.const 1232)
     )
     (call $eosio_assert
      (i64.eq
@@ -17991,11 +18067,11 @@
        (i64.const 8)
       )
      )
-     (i32.const 736)
+     (i32.const 816)
     )
     (call $eosio_assert
      (i32.const 1)
-     (i32.const 800)
+     (i32.const 880)
     )
     (drop
      (call $memcpy
@@ -18009,7 +18085,7 @@
     )
     (call $eosio_assert
      (i32.const 1)
-     (i32.const 800)
+     (i32.const 880)
     )
     (drop
      (call $memcpy
@@ -18249,7 +18325,7 @@
       )
       (call $eosio_assert
        (i32.const 1)
-       (i32.const 816)
+       (i32.const 896)
       )
       (call $eosio_assert
        (i32.eq
@@ -18261,7 +18337,7 @@
          (i32.const 8)
         )
        )
-       (i32.const 544)
+       (i32.const 624)
       )
       (call $eosio_assert
        (i64.eq
@@ -18270,7 +18346,7 @@
         )
         (call $current_receiver)
        )
-       (i32.const 592)
+       (i32.const 672)
       )
       (call $eosio_assert
        (i64.eq
@@ -18281,7 +18357,7 @@
          )
         )
        )
-       (i32.const 864)
+       (i32.const 944)
       )
       (i64.store
        (get_local $9)
@@ -18301,7 +18377,7 @@
         (get_local $7)
         (i64.const -4611686018427387904)
        )
-       (i32.const 912)
+       (i32.const 992)
       )
       (call $eosio_assert
        (i64.lt_s
@@ -18310,7 +18386,7 @@
         )
         (i64.const 4611686018427387904)
        )
-       (i32.const 944)
+       (i32.const 1024)
       )
       (call $eosio_assert
        (i64.eq
@@ -18327,11 +18403,11 @@
          (i64.const 8)
         )
        )
-       (i32.const 736)
+       (i32.const 816)
       )
       (call $eosio_assert
        (i32.const 1)
-       (i32.const 800)
+       (i32.const 880)
       )
       (drop
        (call $memcpy
@@ -18345,7 +18421,7 @@
       )
       (call $eosio_assert
        (i32.const 1)
-       (i32.const 800)
+       (i32.const 880)
       )
       (drop
        (call $memcpy
@@ -18413,7 +18489,7 @@
        )
        (call $current_receiver)
       )
-      (i32.const 976)
+      (i32.const 1056)
      )
      (i64.store offset=8
       (tee_local $0
@@ -18551,7 +18627,7 @@
      )
      (call $eosio_assert
       (i32.const 1)
-      (i32.const 800)
+      (i32.const 880)
      )
      (drop
       (call $memcpy
@@ -18565,7 +18641,7 @@
      )
      (call $eosio_assert
       (i32.const 1)
-      (i32.const 800)
+      (i32.const 880)
      )
      (drop
       (call $memcpy
@@ -19090,7 +19166,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -19122,7 +19198,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -19157,7 +19233,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -19192,7 +19268,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -19227,7 +19303,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -19713,7 +19789,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -19754,7 +19830,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -19793,7 +19869,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -19828,7 +19904,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -20064,7 +20140,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -20086,7 +20162,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -20205,7 +20281,7 @@
      )
      (i32.const 0)
     )
-    (i32.const 800)
+    (i32.const 880)
    )
    (drop
     (call $memcpy
@@ -20279,7 +20355,7 @@
       )
       (i32.const 7)
      )
-     (i32.const 800)
+     (i32.const 880)
     )
     (drop
      (call $memcpy
@@ -20311,7 +20387,7 @@
       )
       (i32.const 7)
      )
-     (i32.const 800)
+     (i32.const 880)
     )
     (drop
      (call $memcpy
@@ -20445,7 +20521,7 @@
      )
      (i32.const 0)
     )
-    (i32.const 800)
+    (i32.const 880)
    )
    (drop
     (call $memcpy
@@ -20501,7 +20577,7 @@
      )
     )
    )
-   (i32.const 800)
+   (i32.const 880)
   )
   (drop
    (call $memcpy
@@ -20631,7 +20707,7 @@
      )
      (i32.const 0)
     )
-    (i32.const 800)
+    (i32.const 880)
    )
    (drop
     (call $memcpy
@@ -20707,7 +20783,7 @@
      )
      (get_local $5)
     )
-    (i32.const 800)
+    (i32.const 880)
    )
    (drop
     (call $memcpy
@@ -21409,7 +21485,7 @@
  )
  (func $malloc (param $0 i32) (result i32)
   (call $_ZN5eosio14memory_manager6mallocEm
-   (i32.const 1820)
+   (i32.const 1960)
    (get_local $0)
   )
  )
@@ -21654,7 +21730,7 @@
          )
         )
        )
-       (i32.const 10224)
+       (i32.const 10368)
       )
       (set_local $13
        (i32.add
@@ -21878,13 +21954,13 @@
    (block $label$1
     (br_if $label$1
      (i32.eqz
-      (i32.load8_u offset=10310
+      (i32.load8_u offset=10454
        (i32.const 0)
       )
      )
     )
     (set_local $7
-     (i32.load offset=10312
+     (i32.load offset=10456
       (i32.const 0)
      )
     )
@@ -21893,11 +21969,11 @@
    (set_local $7
     (current_memory)
    )
-   (i32.store8 offset=10310
+   (i32.store8 offset=10454
     (i32.const 0)
     (i32.const 1)
    )
-   (i32.store offset=10312
+   (i32.store offset=10456
     (i32.const 0)
     (tee_local $7
      (i32.shl
@@ -21948,7 +22024,7 @@
        )
       )
       (set_local $3
-       (i32.load offset=10312
+       (i32.load offset=10456
         (i32.const 0)
        )
       )
@@ -21956,7 +22032,7 @@
      (set_local $8
       (i32.const 0)
      )
-     (i32.store offset=10312
+     (i32.store offset=10456
       (i32.const 0)
       (get_local $3)
      )
@@ -22010,18 +22086,18 @@
      )
      (block $label$6
       (br_if $label$6
-       (i32.load8_u offset=10310
+       (i32.load8_u offset=10454
         (i32.const 0)
        )
       )
       (set_local $3
        (current_memory)
       )
-      (i32.store8 offset=10310
+      (i32.store8 offset=10454
        (i32.const 0)
        (i32.const 1)
       )
-      (i32.store offset=10312
+      (i32.store offset=10456
        (i32.const 0)
        (tee_local $3
         (i32.shl
@@ -22089,12 +22165,12 @@
        )
       )
       (set_local $6
-       (i32.load offset=10312
+       (i32.load offset=10456
         (i32.const 0)
        )
       )
      )
-     (i32.store offset=10312
+     (i32.store offset=10456
       (i32.const 0)
       (i32.add
        (get_local $6)
@@ -22354,7 +22430,7 @@
     (br_if $label$1
      (i32.lt_s
       (tee_local $2
-       (i32.load offset=10204
+       (i32.load offset=10344
         (i32.const 0)
        )
       )
@@ -22362,7 +22438,7 @@
      )
     )
     (set_local $3
-     (i32.const 10012)
+     (i32.const 10152)
     )
     (set_local $1
      (i32.add
@@ -22370,7 +22446,7 @@
        (get_local $2)
        (i32.const 12)
       )
-      (i32.const 10012)
+      (i32.const 10152)
      )
     )
     (loop $label$2
@@ -22462,7 +22538,7 @@
     (br_if $label$0
      (i32.eqz
       (tee_local $2
-       (i32.load offset=10316
+       (i32.load offset=10460
         (i32.const 0)
        )
       )
