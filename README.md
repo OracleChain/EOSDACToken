@@ -44,7 +44,7 @@ cleos -u http://127.0.0.1:8889/ --wallet-url http://127.0.0.1:8890/ create accou
 
 
 4.创建货币
-cleos -u http://127.0.0.1:8889/ --wallet-url http://127.0.0.1:8890/ push action eosdactoken create '[ "eosdactoken", "1000000000.0000 OCT", 0, 0, 0]' -p eosdactoken
+cleos -u http://127.0.0.1:8889/ --wallet-url http://127.0.0.1:8890/ push action eosdactoken create '[ "eosdactoken", "1000000000.0000 OCT"]' -p eosdactoken
 
 5.发行货币
 cleos -u http://127.0.0.1:8889/ --wallet-url http://127.0.0.1:8890/ push action eosdactoken issue '[ "askera", "55.0000 OCT", "m" ]' -p eosdactoken
