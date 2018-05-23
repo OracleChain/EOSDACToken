@@ -316,10 +316,7 @@ using namespace eosio;
     }
 
     void eosdactoken::create(       account_name           issuer,
-                                 asset                  maximum_supply,
-                                 uint8_t                issuer_can_freeze,
-                                 uint8_t                issuer_can_recall,
-                                 uint8_t                issuer_can_whitelist) {
+                                 asset                  maximum_supply) {
       require_auth( _self );
 
       auto sym = maximum_supply.symbol;

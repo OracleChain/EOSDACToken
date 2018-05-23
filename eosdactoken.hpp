@@ -113,9 +113,7 @@ class eosdactoken : public contract {
       /// @abi action
       void create(        account_name           issuer,
       asset                  maximum_supply,
-      uint8_t                issuer_can_freeze     = true,
-      uint8_t                issuer_can_recall     = true,
-      uint8_t                issuer_can_whitelist  = true);
+      );
 
       /// @abi action
       void transfer(
