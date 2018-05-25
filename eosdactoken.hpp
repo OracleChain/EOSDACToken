@@ -33,7 +33,7 @@ struct approveto {
 };
 
 /*
-@abi table accounts
+
 */
 struct account {
    asset     balance;
@@ -42,7 +42,7 @@ struct account {
 };
 
 /*
-@abi table stats
+
 */
 struct curstats {
    asset          supply;
@@ -112,7 +112,7 @@ class eosdactoken : public contract {
 
       /// @abi action
       void create(        account_name           issuer,
-      asset                  maximum_supply,
+      asset                  maximum_supply
       );
 
       /// @abi action

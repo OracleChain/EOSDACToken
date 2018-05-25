@@ -7,7 +7,7 @@
  *  @copyright defined in eos/LICENSE.txt
  */
 #include "eosdactoken.hpp"
-#include"../oc_askanswer/tool.hpp"
+#include"../askAnswerGainCoin/tool.hpp"
 
 EOSIO_ABI( eosdactoken, (transfer)(create)(issue)(transferfee)(approve)(transferfrom)(balanceof)(allowance))
 
