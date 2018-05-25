@@ -95,7 +95,7 @@ using namespace eosio;
                               account_name to,
                               asset        quantity,
                               string       memo) {
-        print(">>>eosdactoken transfer", from);
+        print(" >>>eosdactoken transfer", from);
         print("eosdactoken transfer", to);
         print("eosdactoken transfer", memo.c_str());
         print("eosdactoken transfer", "<<<");
