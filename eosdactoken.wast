@@ -92,7 +92,7 @@
  (data (i32.const 1792) "active\00")
  (data (i32.const 1808) "6000029 TOKEN_MAX_SUPPLY_MUST_POSITIVE\00")
  (data (i32.const 1856) "6000027 TOKEN_WITH_SYMBOL_ALREADY_EXISTS\00")
- (data (i32.const 1904) " >>>eosdactoken transfer\00")
+ (data (i32.const 1904) " > >>eosdactoken transfer\00")
  (data (i32.const 1936) "eosdactoken transfer\00")
  (data (i32.const 10368) "malloc_from_freed was designed to only be called after _heap was completely allocated\00")
  (export "memory" (memory $0))
