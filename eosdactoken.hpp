@@ -221,6 +221,8 @@ class eosdactoken : public contract {
 
       //Add currency to the 'owner' account,and the cost of 'bindwidth ram、cpu'  is paid by payer
       void add_balance( account_name owner, asset currency, account_name payer );
+
+      void checkasset(const asset &quantity);
 };
 
 

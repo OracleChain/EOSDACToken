@@ -16,30 +16,36 @@ using std::array;
 using namespace eosio;
 
 
+    void eosdactoken::checkasset(const asset &quantity){
+        eosio_assert( quantity.symbol.is_valid(), INVALID_SYMBOL_NAME);
+        auto sym = quantity.symbol.name();
+        Stats statstable( _self, sym );
+        const auto& ite = statstable.find( sym );
+        eosio_assert( ite != statstable.end(),  TOKEN_WITH_SYMBOL_DOES_NOT_EXIST_CREATE_TOKEN_BEFORE_ISSUE);
+        const auto& st = *ite;
+        eosio_assert( quantity.is_valid(), INVALID_QUANTITY );
+        eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
+        eosio_assert( quantity.symbol == st.supply.symbol, SYMBOL_PRECISION_MISMATCH);
+        checkoutAmount(quantity.amount);
+    }
+
     void eosdactoken::issue(account_name to,
                          asset        quantity,
                          string       memo) {
 
+        checkasset(quantity);
 
-        eosio_assert( quantity.symbol.is_valid(), INVALID_SYMBOL_NAME);
-
+        eosio_assert( memo.size() <= 256, MEMO_HAS_MORE_THAN_256_BYTES);
         auto sym = quantity.symbol.name();
         Stats statstable( _self, sym );
         const auto& ite = statstable.find( sym );
         const auto& st = *ite;
-
-        eosio_assert( ite != statstable.end(),  TOKEN_WITH_SYMBOL_DOES_NOT_EXIST_CREATE_TOKEN_BEFORE_ISSUE);
+        eosio_assert( quantity.amount <= st.max_supply.amount - st.supply.amount, QUANTITY_EXCEEDS_AVAILABLE_SUPPLY);
 
         require_auth( st.issuer);
 
-        eosio_assert( quantity.is_valid(), INVALID_QUANTITY );
-        eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
-
-        eosio_assert( quantity.symbol == st.supply.symbol, SYMBOL_PRECISION_MISMATCH);
-        eosio_assert( quantity.amount <= st.max_supply.amount - st.supply.amount, QUANTITY_EXCEEDS_AVAILABLE_SUPPLY);
-
         statstable.modify( st, 0, [&]( auto& s ) {
-           s.supply.amount += quantity.amount;
+           s.supply += quantity;
         });
 
         add_balance( st.issuer, quantity,  st.issuer);
@@ -58,6 +64,9 @@ using namespace eosio;
             asset        feequantity,
             string       memo){
 
+          checkasset(quantity);
+          checkasset(feequantity);
+
           require_auth(from);
 
           eosio_assert( from != to, CANNOT_TRANSFER_TO_YOURSELF);
@@ -74,16 +83,6 @@ using namespace eosio;
           require_recipient( to );
           require_recipient( tofeeadmin );
 
-
-          eosio_assert( quantity.is_valid(), INVALID_QUANTITY );
-          eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
-          eosio_assert( quantity.symbol == st.supply.symbol,  SYMBOL_PRECISION_MISMATCH);
-
-
-          eosio_assert( feequantity.is_valid(), INVALID_QUANTITY );
-          eosio_assert( feequantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
-          eosio_assert( feequantity.symbol == st.supply.symbol,  SYMBOL_PRECISION_MISMATCH);
-
           sub_balance( from, quantity, from );
           add_balance( to, quantity, from);
 
@@ -95,10 +94,8 @@ using namespace eosio;
                               account_name to,
                               asset        quantity,
                               string       memo) {
-        print(" > >>eosdactoken transfer", from);
-        print("eosdactoken transfer", to);
-        print("eosdactoken transfer", memo.c_str());
-        print("eosdactoken transfer", "<<<");
+
+        checkasset(quantity);
 
         require_auth(from);
 
@@ -112,12 +109,10 @@ using namespace eosio;
         require_recipient( from );
         require_recipient( to );
 
-        eosio_assert( quantity.is_valid(), INVALID_QUANTITY );
-        eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
-        eosio_assert( quantity.symbol == st.supply.symbol,  SYMBOL_PRECISION_MISMATCH);
+        eosio_assert( memo.size() <= 256, MEMO_HAS_MORE_THAN_256_BYTES);
 
         sub_balance( from, quantity, from);
-        add_balance( to, quantity, from );
+        add_balance( to, quantity, from);
     }
 
     void eosdactoken::sub_balance( account_name owner, asset value, uint64_t payer) {
@@ -126,7 +121,7 @@ using namespace eosio;
 
         Accounts from_acnts( _self, owner );
 
-       const auto& from = from_acnts.get( value.symbol.name() );
+       const auto& from = from_acnts.get( value.symbol.name(),  NO_BALANCE_OBJECT_FOUND_FOR_THIS_ACCOUNT);
        eosio_assert( from.balance.amount >= value.amount, BLANCE_NOT_ENOUGH );
 
        if( from.balance.amount == value.amount ) {
@@ -160,6 +155,8 @@ using namespace eosio;
                            account_name spender,
                            asset quantity){
 
+        checkasset(quantity);
+
         require_auth(owner);
 
         eosio_assert( is_account( spender ), TO_ACCOUNT_DOES_NOT_EXIST);
@@ -177,26 +174,27 @@ using namespace eosio;
 
                 auto approvetoPairIte = a.approved.begin();
 
+                bool finded = false;
                 while(approvetoPairIte != a.approved.end()){
+
                     if(approvetoPairIte->to == spender){
+
+                        finded = true;
                         if(quantity.amount == 0){
                             a.approved.erase(approvetoPairIte);
-                            print("\nerase approve amount = ", approvetoPairIte->value);
                         }else{
                             approvetoPairIte->value = quantity.amount;
-                            print("\napprove amount = ", approvetoPairIte->value);
                         }
                         break;
                     }
                     approvetoPairIte++;
                 }
 
-                if(approvetoPairIte == a.approved.end()){
+                if(!finded && quantity.amount>0){
                     approvetoPair atp;
                     atp.to = spender;
                     atp.value = quantity.amount;
                     a.approved.push_back(atp);
-                    print("\nadd approve amount = ", quantity.amount);
                 }
             });
         }else if(quantity.amount>0){
@@ -245,20 +243,20 @@ using namespace eosio;
          }
     }
 
-    void eosdactoken::transferfrom(account_name from,
-                                account_name to,
+    void eosdactoken::transferfrom(account_name owner,
+                                account_name spender,
                                 asset quantity){
 
-        require_auth(to);
+        checkasset(quantity);
 
-       account_name owner=from;
-       account_name spender=to;
+        require_auth(spender);
 
-       eosio_assert( quantity.is_valid(),  INVALID_QUANTITY);
+
        eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY);
 
-       Approves approveobj(_self, from);
+       Approves approveobj(_self, owner);
        if(approveobj.find(quantity.symbol.name()) != approveobj.end()){
+
            const auto &approSymIte = approveobj.get(quantity.symbol.name());
            approveobj.modify(approSymIte, owner, [&](auto &a){
                a = approSymIte;
@@ -271,13 +269,16 @@ using namespace eosio;
                        eosio_assert(approvetoPairIte->value>=quantity.amount, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
                        eosio_assert(approvetoPairIte->value > approvetoPairIte->value-quantity.amount, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
                        approvetoPairIte->value -= quantity.amount;
+
+                       checkoutAmount(approvetoPairIte->value);
+
                        if(approvetoPairIte->value == 0){
                            a.approved.erase(approvetoPairIte);
                        }
 
-                       require_recipient( to );
-                       sub_balance( from, quantity, to);
-                       add_balance( to,   quantity, to);
+                       require_recipient( spender );
+                       sub_balance( owner, quantity, spender);
+                       add_balance( spender,   quantity, spender);
                        break;
                    }
                    approvetoPairIte++;
