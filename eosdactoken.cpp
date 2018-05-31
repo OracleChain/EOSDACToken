@@ -166,41 +166,48 @@ using namespace eosio;
 
         Accounts from_acnts( _self, owner );
         const auto& from = from_acnts.find( quantity.symbol.name());
-        eosio_assert(quantity.amount>0, APPROVE_QUANTITY_MUST_POSITIVE);
         eosio_assert( from->balance.amount >= quantity.amount, BLANCE_NOT_ENOUGH );
 
         Approves approveobj(_self, owner);
         if(approveobj.find(quantity.symbol.name()) != approveobj.end()){
-            const auto &approSymIte = approveobj.find(quantity.symbol.name());
+
+            auto &approSymIte = approveobj.get(quantity.symbol.name());
 
             approveobj.modify(approSymIte, owner, [&](auto &a){
+
                 auto approvetoPairIte = a.approved.begin();
+
                 while(approvetoPairIte != a.approved.end()){
                     if(approvetoPairIte->to == spender){
-                        approvetoPairIte->value = quantity.amount;
+                        if(quantity.amount == 0){
+                            a.approved.erase(approvetoPairIte);
+                            print("\nerase approve amount = ", approvetoPairIte->value);
+                        }else{
+                            approvetoPairIte->value = quantity.amount;
+                            print("\napprove amount = ", approvetoPairIte->value);
+                        }
                         break;
                     }
                     approvetoPairIte++;
                 }
+
                 if(approvetoPairIte == a.approved.end()){
                     approvetoPair atp;
                     atp.to = spender;
                     atp.value = quantity.amount;
                     a.approved.push_back(atp);
+                    print("\nadd approve amount = ", quantity.amount);
                 }
             });
-        }else{
+        }else if(quantity.amount>0){
+
             approvetoPair atp;
             atp.to = spender;
             atp.value = quantity.amount;
 
-            approveto at;
-            at.approved.push_back(atp);
-            at.symbol_name=quantity.symbol;
-
             approveobj.emplace(owner, [&](auto &a){
                 a.symbol_name = quantity.symbol;
-                a.approved = at.approved;
+                a.approved.push_back(atp);
             });
         }
     }
@@ -251,32 +258,36 @@ using namespace eosio;
        account_name owner=from;
        account_name spender=to;
 
+       eosio_assert( quantity.is_valid(),  INVALID_QUANTITY);
+       eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY);
+
        Approves approveobj(_self, from);
        if(approveobj.find(quantity.symbol.name()) != approveobj.end()){
            const auto &approSymIte = approveobj.get(quantity.symbol.name());
            approveobj.modify(approSymIte, owner, [&](auto &a){
                a = approSymIte;
                auto approvetoPairIte = a.approved.begin();
+               bool finded = false;
                while(approvetoPairIte != a.approved.end()){
 
                    if(approvetoPairIte->to == spender){
+                       finded = true;
                        eosio_assert(approvetoPairIte->value>=quantity.amount, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
+                       eosio_assert(approvetoPairIte->value > approvetoPairIte->value-quantity.amount, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
                        approvetoPairIte->value -= quantity.amount;
+                       eosio::print("eosdactoken transferfrom allowance", approvetoPairIte->value);
+                       if(approvetoPairIte->value == 0){
+                           a.approved.erase(approvetoPairIte);
+                       }
 
-                       auto sym = quantity.symbol.name();
-                       Stats statstable( _self, sym );
-                       const auto& st = statstable.get( sym );
                        require_recipient( to );
-
-                       eosio_assert( quantity.is_valid(),  INVALID_QUANTITY);
-                       eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY);
                        sub_balance( from, quantity, to);
                        add_balance( to,   quantity, to);
                        break;
                    }
                    approvetoPairIte++;
                }
-               if(approvetoPairIte == a.approved.end()){
+               if(!finded){
                    eosio_assert(false, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
                }
            });
