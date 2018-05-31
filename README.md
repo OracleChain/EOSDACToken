@@ -6,12 +6,12 @@ doushadeMacBook-Pro:doc cl$ cleos create key
 Private key: 5Jqs5XFBqC787ywHjfUiT66HrEug5RCcqwgBsFYAX6nz8GU6W8t
 Public key: EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et
 
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet create`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet create
 PW5K1oVxcmtcfpDWAnLmwnsFfvcMp5yjEYT4WFMHmkovsqsqxfitD
 
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet import 5Jqs5XFBqC787ywHjfUiT66HrEug5RCcqwgBsFYAX6nz8GU6W8t
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet import 5Jqs5XFBqC787ywHjfUiT66HrEug5RCcqwgBsFYAX6nz8GU6W8t
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet import 5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3
-cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet import 5JHCz6ZaqrkMYtWqoV6EUgjD7iDngF6bWSDTDJLBv3E4GGXmoXN`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet import 5JHCz6ZaqrkMYtWqoV6EUgjD7iDngF6bWSDTDJLBv3E4GGXmoXN
 
 
 
@@ -23,97 +23,97 @@ ssh://git@github.com:OracleChain/octoneos.git
 ssh://git@github.com:OracleChain/askAnswerGainCoin.git
 
 # 2.下载后，编译合约
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ set contract octoneos ./ eosdactoken.wast eosdactoken.abi -p octoneos
-cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ set contract ocaskans ./ ocaskans.wast ocaskans.abi -p ocaskans`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ set contract octoneos ./ eosdactoken.wast eosdactoken.abi -p octoneos
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ set contract ocaskans ./ ocaskans.wast ocaskans.abi -p ocaskans
 # 3.创建合约发布账户
 ##  3.1 创建token管理账户
 ##  3.2创建问答管理账户
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ create account eosio octoneos EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et
-cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ create account eosio ocaskans EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ create account eosio octoneos EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ create account eosio ocaskans EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et
 
 
 ## 3.3创建问答测试账户
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ create account eosio test EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ create account eosio test EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et
 
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ create account eosio b EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et
 
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ create account eosio askera EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ create account eosio answera EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ create account eosio answerb EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et
-cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ create account eosio answerc EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ create account eosio answerc EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et
 
 
 # 4.创建货币
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos create '[ "octoneos", "1000000000.0000 OCT"]' -p octoneos`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos create '[ "octoneos", "1000000000.0000 OCT"]' -p octoneos
 
 # 5.发行货币
 
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos issue '[ "b", "10000.0000 OCT", "m" ]' -p octoneos
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos issue '[ "b", "10000.0000 OCT", "m" ]' -p octoneos
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos issue '[ "askera", "10000.0000 OCT", "m" ]' -p octoneos
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos issue '[ "askera", "100.0000 OCT", "m" ]' -p octoneos
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos issue '[ "answera", "100.0000 OCT", "m" ]' -p octoneos
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos issue '[ "answerb", "100.0000 OCT", "m" ]' -p octoneos
-cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos issue '[ "answerc", "100.0000 OCT", "m" ]' -p octoneos`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos issue '[ "answerc", "100.0000 OCT", "m" ]' -p octoneos
 
 
 # 6.1转账
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/  push action octoneos transfer '[ "askera", "answera", "12.0000 OCT", "" ]' -p askera`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/  push action octoneos transfer '[ "askera", "answera", "12.0000 OCT", "" ]' -p askera
 
 # 6.2.授权可转走（押币）
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos approve '{"owner":"answera", "spender":"ocaskans", "quantity":"10.0000 OCT"}' -p answera
-cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos approve '{"owner":"askera", "spender":"ocaskans", "quantity":"10.0000 OCT"}' -p askera`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos approve '{"owner":"answera", "spender":"ocaskans", "quantity":"10.0000 OCT"}' -p answera
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos approve '{"owner":"askera", "spender":"ocaskans", "quantity":"10.0000 OCT"}' -p askera
 
 # 7.押币后提问
-`cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action ocaskans ask '{"id":"1", "from":"answera", "quantity":"2.0000 OCT","createtime":"0","endtime":"20000","optionanswerscnt":"3","asktitle":"what is you name","optionanswers":"{\"A\":\"成吉思汗\",\"B\":\"毛泽东\",\"C\":\"拿破仑\"}"}' -p answera
+cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action ocaskans ask '{"id":"1", "from":"answera", "quantity":"2.0000 OCT","createtime":"0","endtime":"20000","optionanswerscnt":"3","asktitle":"what is you name","optionanswers":"{\"A\":\"成吉思汗\",\"B\":\"毛泽东\",\"C\":\"拿破仑\"}"}' -p answera
 cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action ocaskans ask '{"id":"1", "from":"askera", "quantity":"2.0000 OCT","createtime":"0","endtime":"20000","optionanswerscnt":"3","asktitle":"what is you name","optionanswers":"{\"A\":\"成吉思汗\",\"B\":\"毛泽东\",\"C\":\"拿破仑\"}"}' -p askera
-cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action ocaskans ask '{"id":"1", "from":"askera", "quantity":"2.0000 OCT","createtime":"0","endtime":"20000","optionanswerscnt":"3","asktitle":"what is you name","optionanswers":"{\"A\":\"成吉思汗\",\"B\":\"毛泽东\",\"C\":\"拿破仑\"}"}' -p askera`
+cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action ocaskans ask '{"id":"1", "from":"askera", "quantity":"2.0000 OCT","createtime":"0","endtime":"20000","optionanswerscnt":"3","asktitle":"what is you name","optionanswers":"{\"A\":\"成吉思汗\",\"B\":\"毛泽东\",\"C\":\"拿破仑\"}"}' -p askera
 
 
 # 8.押币
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos approve '{"owner":"answerb", "spender":"ocaskans", "quantity":"10.0000 OCT"}' -p answerb
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos approve '{"owner":"answerb", "spender":"ocaskans", "quantity":"10.0000 OCT"}' -p answerb
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos approve '{"owner":"answera", "spender":"ocaskans", "quantity":"10.0000 OCT"}' -p answera
-cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos approve '{"owner":"answerc", "spender":"ocaskans", "quantity":"10.0000 OCT"}' -p answerc`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos approve '{"owner":"answerc", "spender":"ocaskans", "quantity":"10.0000 OCT"}' -p answerc
 
 # 9.押币后回答问题
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/   push action ocaskans answer '{"from":"askera", "askid":"1","choosedanswer":"1"}' -p askera
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/   push action ocaskans answer '{"from":"askera", "askid":"1","choosedanswer":"1"}' -p askera
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/   push action ocaskans answer '{"from":"b", "askid":"1","choosedanswer":"1"}' -p b
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/   push action ocaskans answer '{"from":"answerb", "askid":"2","choosedanswer":"2"}' -p answerb
-cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/   push action ocaskans answer '{"from":"answerc", "askid":"2","choosedanswer":"2"}' -p answerc`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/   push action ocaskans answer '{"from":"answerc", "askid":"2","choosedanswer":"2"}' -p answerc
 
 
 
 # 10.释放问题，并自动奖励货币给回答者（包含回答问题时候押的币）
-`cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/  push action ocaskans releasemog '{"askid":"2"}' -p ocaskans`
+cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/  push action ocaskans releasemog '{"askid":"2"}' -p ocaskans
 
 
 # 11.获取账户余额等信息
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/  get table octoneos octoneos accounts
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/  get table octoneos octoneos accounts
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/  get table octoneos ocaskans accounts
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/  get table octoneos askera accounts
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/  get table octoneos answera accounts
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/  get table octoneos answerb accounts
-cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/  get table octoneos answerc accounts`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/  get table octoneos answerc accounts
 
 
 # 12.获取问答列表信息
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ get table -l 100 ocaskans ocaskans ask
-cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ get table ocaskans ocaskans answers `
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ get table -l 100 ocaskans ocaskans ask
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ get table ocaskans ocaskans answers 
 
 
 # 13.config,配置回答问题所需要的押币数量
-`cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action ocaskans config '{"admin":"ocaskans","ansreqoct":"0"}'  -p ocaskans`
+cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action ocaskans config '{"admin":"ocaskans","ansreqoct":"0"}'  -p ocaskans
 
 # 辅助功能接口
 >根据问题id删除问题
-`cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action ocaskans rmask '{"askid":"1"}' -p ocaskans`
+cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action ocaskans rmask '{"askid":"1"}' -p ocaskans
 
 # 从押币账户中转货币到自己账户上
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos transferfrom '{"from":"answerb", "to":"ocaskans", "quantity":"1.0000 OCT"}' -p ocaskans`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos transferfrom '{"from":"answerb", "to":"ocaskans", "quantity":"1.0000 OCT"}' -p ocaskans
 
 
 # 备注
 错误码列表：
-`# define SUCCESS_CODE 0
+# define SUCCESS_CODE 0
 # define PARAMETER_ERROR "6000001 PARAMETER_ERROR" //参数错误
 # define BLANCE_NOT_ENOUGH "6000002 BLANCE_NOT_ENOUGH" //余额不足
 # define ASK_NOT_EXISTS "6000006 ASK_NOT_EXISTS"//问题不存在
@@ -137,27 +137,27 @@ cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ get table oc
 # define CAN_ONLY_TRANSFER_TO_WHITE_LISTED_ACCOUNTS "6000024 CAN_ONLY_TRANSFER_TO_WHITE_LISTED_ACCOUNTS"//只能转账给白名单账户
 # define RECEIVER_REQUIRES_WHITELIST_BY_ISSUER "6000025 RECEIVER_REQUIRES_WHITELIST_BY_ISSUER"//货币状态或者接收方状态要求白名单属性
 # define INVALID_SYMBOL_NAME "6000026 INVALID_SYMBOL_NAME"//无效的货币
-# define TOKEN_WITH_SYMBOL_ALREADY_EXISTS "6000027 TOKEN_WITH_SYMBOL_ALREADY_EXISTS"//货币已经存在`
+# define TOKEN_WITH_SYMBOL_ALREADY_EXISTS "6000027 TOKEN_WITH_SYMBOL_ALREADY_EXISTS"//货币已经存在
 
 
 # 问答java接口
 获取问题或问题列表
-`curl -H "Content-Type: application/json"  -X POST -d '{"askid": "-1",    "page": {"pageNum":0,"pageSize":100},  "releasedLable":0}' "http://127.0.0.1:8080/eosaskanswer30/GetAsksJson"`
+curl -H "Content-Type: application/json"  -X POST -d '{"askid": "-1",    "page": {"pageNum":0,"pageSize":100},  "releasedLable":0}' "http://127.0.0.1:8080/eosaskanswer30/GetAsksJson"
 
 # 获取答案
-`curl -H "Content-Type: application/json"  -X POST -d '{"askid": "2",    "page": {"pageNum":0,"pageSize":100}}' "http://127.0.0.1:8080/eosaskanswer30/GetAnswersJson"`
+curl -H "Content-Type: application/json"  -X POST -d '{"askid": "2",    "page": {"pageNum":0,"pageSize":100}}' "http://127.0.0.1:8080/eosaskanswer30/GetAnswersJson"
 
 
 # 新增安全机制：
-`Private key: 5JHCz6ZaqrkMYtWqoV6EUgjD7iDngF6bWSDTDJLBv3E4GGXmoXN
-Public key: EOS8W7jnJH6n5vfBwnp3JW3PzvZpaWTSnWx4GMhPsezXfxR8ZwjJk`
+Private key: 5JHCz6ZaqrkMYtWqoV6EUgjD7iDngF6bWSDTDJLBv3E4GGXmoXN
+Public key: EOS8W7jnJH6n5vfBwnp3JW3PzvZpaWTSnWx4GMhPsezXfxR8ZwjJk
 
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ get account  eosio.code
-cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ set account permission ocaskans active '{"threshold": 1,"keys": [{"key": "EOS8W7jnJH6n5vfBwnp3JW3PzvZpaWTSnWx4GMhPsezXfxR8ZwjJk","weight": 1}],"accounts": [{"permission":{"actor":"ocaskans","permission":"eosio.code"},"weight":1}]}' owner -p ocaskans`
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ get account  eosio.code
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ set account permission ocaskans active '{"threshold": 1,"keys": [{"key": "EOS8W7jnJH6n5vfBwnp3JW3PzvZpaWTSnWx4GMhPsezXfxR8ZwjJk","weight": 1}],"accounts": [{"permission":{"actor":"ocaskans","permission":"eosio.code"},"weight":1}]}' owner -p ocaskans
 
 
 # erc20辅助接口标准接口
-`cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ get  currency balance octoneos ocaskans OCT
+cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ get  currency balance octoneos ocaskans OCT
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos allowance '{"owner":"answera", "spender":"ocaskans", "symbol":"oct"}' -p answera
 cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos balanceof '{"owner":"answerb", "symbol":"OCT"}' -p answerb
-cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos totalsupply '{"symbol":"OCT"}' -p answerb`
+cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos totalsupply '{"symbol":"OCT"}' -p answerb
