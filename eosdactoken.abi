@@ -179,6 +179,14 @@
           "type": "string"
         }
       ]
+    },{
+      "name": "totalsupply",
+      "base": "",
+      "fields": [{
+          "name": "symbol",
+          "type": "string"
+        }
+      ]
     }
   ],
   "actions": [{
@@ -212,6 +220,10 @@
     },{
       "name": "balanceof",
       "type": "balanceof",
+      "ricardian_contract": ""
+    },{
+      "name": "totalsupply",
+      "type": "totalsupply",
       "ricardian_contract": ""
     }
   ],

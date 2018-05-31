@@ -9,7 +9,7 @@
 #include "eosdactoken.hpp"
 #include"../askAnswerGainCoin/tool.hpp"
 
-EOSIO_ABI( eosdactoken, (transfer)(create)(issue)(transferfee)(approve)(transferfrom)(balanceof)(allowance))
+EOSIO_ABI( eosdactoken, (transfer)(create)(issue)(transferfee)(approve)(transferfrom)(balanceof)(allowance)(totalsupply))
 
 using std::string;
 using std::array;
@@ -42,7 +42,7 @@ using namespace eosio;
            s.supply.amount += quantity.amount;
         });
 
-        add_balance( st.issuer, quantity, st, st.issuer );
+        add_balance( st.issuer, quantity,  st.issuer);
 
         if( to != st.issuer )
         {
@@ -84,11 +84,11 @@ using namespace eosio;
           eosio_assert( feequantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
           eosio_assert( feequantity.symbol == st.supply.symbol,  SYMBOL_PRECISION_MISMATCH);
 
-          sub_balance( from, quantity, st );
-          add_balance( to, quantity, st, from );
+          sub_balance( from, quantity, from );
+          add_balance( to, quantity, from);
 
-          sub_balance( from, feequantity, st );
-          add_balance( tofeeadmin, feequantity, st, from );
+          sub_balance( from, feequantity, from);
+          add_balance( tofeeadmin, feequantity, from);
     }
 
     void eosdactoken::transfer(  account_name from,
@@ -116,70 +116,40 @@ using namespace eosio;
         eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY );
         eosio_assert( quantity.symbol == st.supply.symbol,  SYMBOL_PRECISION_MISMATCH);
 
-        sub_balance( from, quantity, st );
-        add_balance( to, quantity, st, from );
+        sub_balance( from, quantity, from);
+        add_balance( to, quantity, from );
     }
 
-    void eosdactoken::sub_balancefrom( account_name owner, asset value, const curstats& st ) {
-       Accounts from_acnts( _self, owner );
+    void eosdactoken::sub_balance( account_name owner, asset value, uint64_t payer) {
+
+        require_auth(payer);
+
+        Accounts from_acnts( _self, owner );
 
        const auto& from = from_acnts.get( value.symbol.name() );
        eosio_assert( from.balance.amount >= value.amount, BLANCE_NOT_ENOUGH );
 
-
        if( from.balance.amount == value.amount ) {
             from_acnts.erase( from );
          } else {
-            from_acnts.modify( from, 0, [&]( auto& a ) {
+            from_acnts.modify( from, payer, [&]( auto& a ) {
                 a.balance -= value;
             });
        }
     }
 
-    void eosdactoken::add_balancefrom( account_name owner, asset value, const curstats& st)
+    void eosdactoken::add_balance( account_name owner, asset value, account_name payer )
     {
-       require_auth( owner );
+       require_auth(payer);
 
        Accounts to_acnts( _self, owner );
        auto to = to_acnts.find( value.symbol.name() );
        if( to == to_acnts.end() ) {
-          to_acnts.emplace( owner, [&]( auto& a ){
+          to_acnts.emplace( payer, [&]( auto& a ){
              a.balance = value;
           });
        } else {
-          to_acnts.modify( to, owner, [&]( auto& a ) {
-            a.balance += value;
-          });
-       }
-    }
-
-    void eosdactoken::sub_balance( account_name owner, asset value, const curstats& st ) {
-       Accounts from_acnts( _self, owner );
-
-       const auto& from = from_acnts.get( value.symbol.name() );
-       eosio_assert( from.balance.amount >= value.amount, BLANCE_NOT_ENOUGH );
-
-       //require_auth( owner );
-
-       if( from.balance.amount == value.amount ) {
-            from_acnts.erase( from );
-         } else {
-            from_acnts.modify( from, owner, [&]( auto& a ) {
-                a.balance -= value;
-            });
-       }
-    }
-
-    void eosdactoken::add_balance( account_name owner, asset value, const curstats& st, account_name ram_payer )
-    {
-       Accounts to_acnts( _self, owner );
-       auto to = to_acnts.find( value.symbol.name() );
-       if( to == to_acnts.end() ) {
-          to_acnts.emplace( ram_payer, [&]( auto& a ){
-             a.balance = value;
-          });
-       } else {
-          to_acnts.modify( to, 0, [&]( auto& a ) {
+          to_acnts.modify( to, payer, [&]( auto& a ) {
             a.balance += value;
           });
        }
@@ -238,7 +208,7 @@ using namespace eosio;
     void eosdactoken::balanceof(account_name owner,
                              std::string  symbol){
         symbol_name sn = string_to_symbol(4, symbol.c_str());
-        print("balanceof[",symbol.c_str(),"]", get_balance(owner, sn));
+        print("balanceof[",symbol.c_str(),"]", get_balance(owner, symbol_type(sn).name()));
     }
 
 
@@ -300,8 +270,8 @@ using namespace eosio;
 
                        eosio_assert( quantity.is_valid(),  INVALID_QUANTITY);
                        eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY);
-                       sub_balancefrom( from, quantity, st );
-                       add_balancefrom( to, quantity, st);
+                       sub_balance( from, quantity, to);
+                       add_balance( to,   quantity, to);
                        break;
                    }
                    approvetoPairIte++;
@@ -316,13 +286,13 @@ using namespace eosio;
     }
 
     void eosdactoken::create(       account_name           issuer,
-                                 asset                  maximum_supply) {
+                                 asset                  currency) {
       require_auth( _self );
 
-      auto sym = maximum_supply.symbol;
+      auto sym = currency.symbol;
       eosio_assert( sym.is_valid(), INVALID_SYMBOL_NAME);
-      eosio_assert( maximum_supply.is_valid(), INVALID_QUANTITY);
-      eosio_assert( maximum_supply.amount>0, TOKEN_MAX_SUPPLY_MUST_POSITIVE) ;
+      eosio_assert( currency.is_valid(), INVALID_QUANTITY);
+      eosio_assert( currency.amount>0, TOKEN_MAX_SUPPLY_MUST_POSITIVE) ;
 
        Stats statstable( _self, sym.name() );
        auto existing = statstable.find( sym.name() );
@@ -331,8 +301,8 @@ using namespace eosio;
 
 
        statstable.emplace( issuer, [&]( auto& s ) {
-          s.supply.symbol = maximum_supply.symbol;
-          s.max_supply    = maximum_supply;
+          s.supply.symbol = currency.symbol;
+          s.max_supply    = currency;
           s.issuer        = issuer;
        });
     }

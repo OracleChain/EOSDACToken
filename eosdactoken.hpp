@@ -1,5 +1,13 @@
 /**
-
+This contract follows the erc20 standard
+contract ERC20Interface {
+    function totalSupply() public constant returns (uint);
+    function balanceOf(address tokenOwner) public constant returns (uint balance);
+    function allowance(address tokenOwner, address spender) public constant returns (uint remaining);
+    function transfer(address to, uint tokens) public returns (bool success);
+    function approve(address spender, uint tokens) public returns (bool success);
+    function transferFrom(address from, address to, uint tokens) public returns (bool success);
+}
 */
 
 #pragma once
@@ -13,6 +21,7 @@ using std::array;
 
 using namespace eosio;
 using boost::container::flat_map;
+
 
 struct approvetoPair
 {
@@ -66,6 +75,10 @@ class eosdactoken : public contract {
         EOSLIB_SERIALIZE( fee_schedule, (fee_per_length) )
      };
 
+
+     // ------------------------------------------------------------------------
+     // get amount of  `spender` can withdraw from your account
+     // ------------------------------------------------------------------------
      uint64_t allowanceOf( account_name owner,
      account_name spender,
      symbol_name  symbol){
@@ -104,17 +117,23 @@ class eosdactoken : public contract {
 
 
      asset get_supply( symbol_name symbol )const {
-        Stats statstable( _self, symbol );
-        const auto& st = statstable.get( symbol );
-        return st.supply;
+        Stats statstable( _self, symbol_type(symbol).name());
+        const auto& st = statstable.get(symbol_type(symbol).name());
+        return st.max_supply;
      }
 
-
+      // ------------------------------------------------------------------------
+      //A currency is issued, the issuer is ‘issuer’
+      // ------------------------------------------------------------------------
       /// @abi action
       void create(        account_name           issuer,
-      asset                  maximum_supply
+      asset  currency
       );
 
+      // ------------------------------------------------------------------------
+      // Transfer the balance from token owner's account to `to` account
+      // - from's account must have sufficient balance to transfer
+      // ------------------------------------------------------------------------
       /// @abi action
       void transfer(
       account_name from,
@@ -122,6 +141,10 @@ class eosdactoken : public contract {
       asset        quantity,
       string       memo);
 
+      // ------------------------------------------------------------------------
+      // Transfer the balance from token owner's account to `to` account,and transfer 'feequantity' to 'tofeeadmin' account at the same time
+      // - from's account must have sufficient balance to transfer
+      // ------------------------------------------------------------------------
       /// @abi action
       void transferfee(       account_name from,
                               account_name to,
@@ -130,52 +153,72 @@ class eosdactoken : public contract {
                               asset        feequantity,
                               string       memo);
 
+      // ------------------------------------------------------------------------
+      //Issue money to users
+      // ------------------------------------------------------------------------
       /// @abi action
       void issue(
       account_name to,
       asset        quantity,
       string       memo);
 
+      // ------------------------------------------------------------------------
+      // Allow `spender` to withdraw from your account, multiple times, up to the `quantity` amount.
+      // If this function is called again it overwrites the current allowance with value.
+      // ------------------------------------------------------------------------
       /// @abi action
       void approve(
       account_name owner,
       account_name spender,
       asset quantity);
 
+      // ------------------------------------------------------------------------
+      // Returns the amount of tokens approved by the owner that can be
+      // transferred to the spender's account
+      // ------------------------------------------------------------------------
       /// @abi action
       void allowance(
       account_name owner,
       account_name spender,
       std::string  symbol);
 
-      /// @notice send `_value` token to `_to` from `_from` on the condition it is approved by `_from`
-      /// @param from The account of the sender
-      /// @param to The account of the recipient
-      /// @param quantity The amount of token to be transferred
+      // ------------------------------------------------------------------------
+      // Transfer `tokens` from the `from` account to the `to` account
+      //
+      // The calling account must already have sufficient tokens approve(...)-d
+      // for spending from the `from` account and
+      // - From account must have sufficient balance to transfer
+      // - Spender must have sufficient allowance to transfer
+      // ------------------------------------------------------------------------
       /// @abi action
       void transferfrom(
       account_name from,
       account_name to,
       asset quantity);
 
-      /// @param owner The account from which the balance will be retrieved
-      /// @param symbol
+      // ------------------------------------------------------------------------
+      //Get the token on symbol balance for account `owner`
+      // ------------------------------------------------------------------------
       /// @abi action
       void balanceof(
       account_name owner,
       std::string  symbol);
 
+      // ------------------------------------------------------------------------
+      // Total supply of token symbol
+      // ------------------------------------------------------------------------
+      //@abi action
+      void totalsupply(std::string  symbol){
+          symbol_name sn = string_to_symbol(4, symbol.c_str());
+          print("totalsupply[",symbol.c_str(),"]", get_supply(sn).amount);
+      }
+
 
   private:
-      void sub_balance( account_name owner, asset value, const curstats& st );
+      //Add asset to the 'owner' account
+      void sub_balance( account_name owner, asset value,  uint64_t payer);
 
-      void add_balance( account_name owner, asset value, const curstats& st, account_name ram_payer );
-
-      void sub_balancefrom( account_name owner, asset value, const curstats& st );
-
-      void add_balancefrom( account_name owner, asset value, const curstats& st);
-
-
+      void add_balance( account_name owner, asset value, account_name ram_payer );
 };
 
 
