@@ -224,8 +224,9 @@ using namespace eosio;
                               std::string  symbol){
         Approves approveobj(_self, owner);
 
-         if(approveobj.find(string_to_symbol(4, symbol.c_str())) != approveobj.end()){
-             const auto &approSymIte = approveobj.get(string_to_symbol(4, symbol.c_str()));
+        symbol_type st = symbol_type(string_to_symbol(4, symbol.c_str()));
+         if(approveobj.find(st.name()) != approveobj.end()){
+             const auto &approSymIte = approveobj.get(st.name());
              auto approvetoPairIte = approSymIte.approved.begin();
              while(approvetoPairIte != approSymIte.approved.end()){
 
@@ -247,11 +248,6 @@ using namespace eosio;
     void eosdactoken::transferfrom(account_name from,
                                 account_name to,
                                 asset quantity){
-
-        eosio::print(">>>eosdactoken transferfrom", from);
-        eosio::print("eosdactoken transferfrom", to);
-        eosio::print("eosdactoken transferfrom", quantity);
-        eosio::print("eosdactoken transferfrom", "<<<");
 
         require_auth(to);
 
@@ -275,7 +271,6 @@ using namespace eosio;
                        eosio_assert(approvetoPairIte->value>=quantity.amount, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
                        eosio_assert(approvetoPairIte->value > approvetoPairIte->value-quantity.amount, NOT_ENOUGH_ALLOWED_OCT_TO_DO_IT);
                        approvetoPairIte->value -= quantity.amount;
-                       eosio::print("eosdactoken transferfrom allowance", approvetoPairIte->value);
                        if(approvetoPairIte->value == 0){
                            a.approved.erase(approvetoPairIte);
                        }
