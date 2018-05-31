@@ -1,4 +1,4 @@
-# 前提：
+# 前提
 ## 创建公私钥  
 doushadeMacBook-Pro:doc cl$ cleos create key  
 Private key: 5KYRmJzV2eRswvdQ6rvkeDMBWyh8Vq33FUY8PVmAZUbvAVeukzU  
