@@ -215,10 +215,11 @@ class eosdactoken : public contract {
 
 
   private:
-      //Add asset to the 'owner' account
-      void sub_balance( account_name owner, asset value,  uint64_t payer);
+      //Sub currency to the 'owner' account,and the cost of 'bindwidth ram、cpu'  is paid by payer
+      void sub_balance( account_name owner, asset currency,  uint64_t payer);
 
-      void add_balance( account_name owner, asset value, account_name ram_payer );
+      //Add currency to the 'owner' account,and the cost of 'bindwidth ram、cpu'  is paid by payer
+      void add_balance( account_name owner, asset currency, account_name payer );
 };
 
 
