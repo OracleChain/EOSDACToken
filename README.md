@@ -1,4 +1,5 @@
-# 前提：创建公私钥  
+# 前提：
+## 创建公私钥  
 doushadeMacBook-Pro:doc cl$ cleos create key  
 Private key: 5KYRmJzV2eRswvdQ6rvkeDMBWyh8Vq33FUY8PVmAZUbvAVeukzU  
 Public key: EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb      
@@ -7,16 +8,14 @@ doushadeMacBook-Pro:doc cl$ cleos create key
 Private key: 5Jqs5XFBqC787ywHjfUiT66HrEug5RCcqwgBsFYAX6nz8GU6W8t  
 Public key: EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et  
   
-# 创建钱包
+## 创建钱包
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet create  
 PW5K1oVxcmtcfpDWAnLmwnsFfvcMp5yjEYT4WFMHmkovsqsqxfitD  
   
-# 倒入私钥
+## 倒入私钥
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet import 5Jqs5XFBqC787ywHjfUiT66HrEug5RCcqwgBsFYAX6nz8GU6W8t  
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet import 5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3  
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet import 5JHCz6ZaqrkMYtWqoV6EUgjD7iDngF6bWSDTDJLBv3E4GGXmoXN  
-  
-  
   
 # 1.下载合约文件，  
 token合约地址  
