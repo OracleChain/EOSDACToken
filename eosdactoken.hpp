@@ -22,41 +22,42 @@ using std::array;
 using namespace eosio;
 using boost::container::flat_map;
 
-
+//one cheque
 struct approvetoPair
 {
-    account_name to;
-    int64_t value;
+    account_name to;//cheque to who
+    int64_t value;//cheque value
     approvetoPair() {}
     EOSLIB_SERIALIZE(approvetoPair, (to)(value))
 };
 
 /*
+ * cheques list of someone
 @abi table approves
 */
 struct approveto {
-   symbol_type symbol_name;
-   std::vector<approvetoPair> approved;
+   symbol_type symbol_name;//name of symbol
+   std::vector<approvetoPair> approved;//list of cheque to others
    uint64_t primary_key()const { return symbol_name.name(); }
    EOSLIB_SERIALIZE( approveto, (symbol_name)(approved))
 };
 
 /*
-
+account info
 */
 struct account {
-   asset     balance;
+   asset     balance;//account balance
    uint64_t primary_key()const { return balance.symbol.name(); }
    EOSLIB_SERIALIZE( account, (balance))
 };
 
 /*
-
+status of one currency
 */
 struct curstats {
-   asset          supply;
-   asset          max_supply;
-   account_name   issuer;
+   asset          supply;//amount of money already supplied
+   asset          max_supply;//Maximum supply of money
+   account_name   issuer;//Currency issuer
 
    uint64_t primary_key()const { return supply.symbol.name(); }
    EOSLIB_SERIALIZE( curstats, (supply)(max_supply)(issuer))
