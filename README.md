@@ -1,7 +1,7 @@
 # 前提：创建公私钥
 doushadeMacBook-Pro:doc cl$ cleos create key
 Private key: 5KYRmJzV2eRswvdQ6rvkeDMBWyh8Vq33FUY8PVmAZUbvAVeukzU
-Public key: EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb
+Public key: EOS8gb6EkQDry72Ugwwy6MUZCr7EQ4ytGAeRhu3knVsA3qSneWPEb  
 doushadeMacBook-Pro:doc cl$ cleos create key
 Private key: 5Jqs5XFBqC787ywHjfUiT66HrEug5RCcqwgBsFYAX6nz8GU6W8t
 Public key: EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et
