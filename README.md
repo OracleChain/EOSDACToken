@@ -7,9 +7,11 @@ doushadeMacBook-Pro:doc cl$ cleos create key
 Private key: 5Jqs5XFBqC787ywHjfUiT66HrEug5RCcqwgBsFYAX6nz8GU6W8t  
 Public key: EOS6BB3rfssiBdiBN2d14GQLswcM1KBmcKWEM8fiSmdLw6eKWP5et  
   
+# 创建钱包
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet create  
 PW5K1oVxcmtcfpDWAnLmwnsFfvcMp5yjEYT4WFMHmkovsqsqxfitD  
   
+# 倒入私钥
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet import 5Jqs5XFBqC787ywHjfUiT66HrEug5RCcqwgBsFYAX6nz8GU6W8t  
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet import 5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3  
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ wallet import 5JHCz6ZaqrkMYtWqoV6EUgjD7iDngF6bWSDTDJLBv3E4GGXmoXN  
@@ -158,7 +160,11 @@ cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ set account 
   
   
 # erc20辅助接口标准接口  
+## 获取用户oct余额
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ get  currency balance octoneos ocaskans OCT  
+## 获取用户的支付给某人的支票额度
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos allowance '{"owner":"answera", "spender":"ocaskans", "symbol":"oct"}' -p answera  
+## 获取某人的oct余额
 cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos balanceof '{"owner":"answerb", "symbol":"OCT"}' -p answerb  
+## 获取oct这种货币的发行量
 cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos totalsupply '{"symbol":"OCT"}' -p answerb
