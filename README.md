@@ -165,6 +165,7 @@ cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ get  currenc
 cleos -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos allowance '{"owner":"askera", "spender":"ocaskans", "symbol":"OCT"}' -p askera  
 ## 获取某人的oct余额
 cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos balanceof '{"owner":"answerb", "symbol":"OCT"}' -p answerb  
+
 ## 获取oct这种货币的发行量
 cleos  -u http://127.0.0.1:8888/ --wallet-url http://127.0.0.1:8890/ push action octoneos totalsupply '{"symbol":"OCT"}' -p answerb
 

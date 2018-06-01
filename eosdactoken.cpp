@@ -163,6 +163,9 @@ using namespace eosio;
 
         Accounts from_acnts( _self, owner );
         const auto& from = from_acnts.find( quantity.symbol.name());
+
+        eosio_assert(from!=from_acnts.end(),  YOU_NOT_HAVE_THIS_TOKEN_NOW);
+
         eosio_assert( from->balance.amount >= quantity.amount, BLANCE_NOT_ENOUGH );
 
         Approves approveobj(_self, owner);
@@ -250,6 +253,8 @@ using namespace eosio;
         checkasset(quantity);
 
         require_auth(spender);
+
+        eosio_assert( is_account( owner ), TO_ACCOUNT_DOES_NOT_EXIST);
 
 
        eosio_assert( quantity.amount > 0, MUST_ISSUE_POSITIVE_QUANTITY);
