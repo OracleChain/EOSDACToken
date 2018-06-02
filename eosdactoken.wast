@@ -2210,6 +2210,11 @@
    (get_local $8)
    (i32.const 1888)
   )
+  (set_local $4
+   (i64.load
+    (get_local $0)
+   )
+  )
   (call $eosio_assert
    (i64.eq
     (i64.load
@@ -2326,7 +2331,7 @@
       )
      )
      (i64.const -4157495357179166720)
-     (get_local $1)
+     (get_local $4)
      (tee_local $7
       (i64.shr_u
        (i64.load offset=8

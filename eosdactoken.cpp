@@ -312,7 +312,7 @@ using namespace eosio;
 
 
 
-       statstable.emplace( issuer, [&]( auto& s ) {
+       statstable.emplace( _self, [&]( auto& s ) {
           s.supply.symbol = currency.symbol;
           s.max_supply    = currency;
           s.issuer        = issuer;
