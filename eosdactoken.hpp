@@ -113,6 +113,12 @@ class eosdactoken : public contract {
 
      asset get_balance( account_name owner, symbol_name symbol )const {
         Accounts t( _self, owner );
+        if(t.find(symbol) == t.end()){
+            asset as;
+            as.amount = 0;
+            as.symbol = symbol_type(symbol);
+            return as;
+        }
         return t.get(symbol).balance;
      }
 
