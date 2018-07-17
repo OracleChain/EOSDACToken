@@ -9,7 +9,7 @@
 #include "eosdactoken.hpp"
 #include"tool.hpp"
 
-EOSIO_ABI( eosdactoken, (transfer)(create)(issue)(transferfee)(approve)(transferfrom)(balanceof)(allowance)(totalsupply))
+EOSIO_ABI( eosdactoken, (transfer)(create)(issue)(transferfee)(approve)(transferfrom)(balanceof)(allowance)(totalsupply)(copycurstate))
 
 using std::string;
 using std::array;
@@ -66,6 +66,7 @@ using namespace eosio;
 
           checkasset(quantity);
           checkasset(feequantity);
+          eosio_assert( quantity.symbol == feequantity.symbol, TOKEN_SYMBOL_SHOULD_EQUAL_FEE_SYMBOL);
 
           require_auth(from);
 
@@ -155,7 +156,16 @@ using namespace eosio;
                            account_name spender,
                            asset quantity){
 
-        checkasset(quantity);
+        eosio_assert( quantity.symbol.is_valid(), INVALID_SYMBOL_NAME);
+        auto sym = quantity.symbol.name();
+        Stats statstable( _self, sym );
+        const auto& ite = statstable.find( sym );
+        eosio_assert( ite != statstable.end(),  TOKEN_WITH_SYMBOL_DOES_NOT_EXIST_CREATE_TOKEN_BEFORE_ISSUE);
+        const auto& st = *ite;
+        eosio_assert( quantity.is_valid(), INVALID_QUANTITY );
+        eosio_assert( quantity.amount >= 0, MUST_ISSUE_POSITIVE_QUANTITY );
+        eosio_assert( quantity.symbol == st.supply.symbol, SYMBOL_PRECISION_MISMATCH);
+        checkoutAmount(quantity.amount);
 
         require_auth(owner);
 
@@ -216,7 +226,7 @@ using namespace eosio;
     void eosdactoken::balanceof(account_name owner,
                              std::string  symbol){
         symbol_name sn = string_to_symbol(4, symbol.c_str());
-        print("balanceof[",symbol.c_str(),"]", get_balance(owner, symbol_type(sn).name()));
+        print("balanceOf[",symbol.c_str(),"]=", get_balance(owner, symbol_type(sn).name()));
     }
 
 
@@ -317,4 +327,32 @@ using namespace eosio;
           s.max_supply    = currency;
           s.issuer        = issuer;
        });
+    }
+
+    void eosdactoken::copycurstate(std::string symbol){
+        require_auth( _self );
+
+        auto sym = symbol_type(string_to_symbol(4, symbol.c_str())).name();
+        Stats statstable( _self, sym );
+        auto existing = statstable.find( sym );
+        const auto& st = *existing;
+
+
+        eosio_assert( existing != statstable.end(), TOKEN_WITH_SYMBOL_NOT_EXISTS);
+
+        Stat stattable( _self, sym );
+        const auto& stdest = stattable.find(sym);
+        if(stdest!=stattable.end()){
+            stattable.modify( stdest, 0, [&]( auto& s ) {
+                s.supply        = st.supply;
+                s.max_supply    = st.max_supply;
+                s.issuer        = st.issuer;
+             });
+        }else{
+            stattable.emplace( _self, [&]( auto& s ) {
+               s.supply        = st.supply;
+               s.max_supply    = st.max_supply;
+               s.issuer        = st.issuer;
+            });
+        }
     }
