@@ -174,7 +174,7 @@ class eosdactoken : public contract {
       //for standard:cleos get currency command
       // ------------------------------------------------------------------------
       /// @abi action
-      void copycurstate(std::string  symbol);
+      void copystates(std::string  symbol);
 
       // ------------------------------------------------------------------------
       // Allow `spender` to withdraw from your account, multiple times, up to the `quantity` amount.

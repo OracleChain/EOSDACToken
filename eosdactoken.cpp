@@ -9,7 +9,7 @@
 #include "eosdactoken.hpp"
 #include"tool.hpp"
 
-EOSIO_ABI( eosdactoken, (transfer)(create)(issue)(transferfee)(approve)(transferfrom)(balanceof)(allowance)(totalsupply)(copycurstate))
+EOSIO_ABI( eosdactoken, (transfer)(create)(issue)(transferfee)(approve)(transferfrom)(balanceof)(allowance)(totalsupply)(copystates))
 
 using std::string;
 using std::array;
@@ -329,7 +329,7 @@ using namespace eosio;
        });
     }
 
-    void eosdactoken::copycurstate(std::string symbol){
+    void eosdactoken::copystates(std::string symbol){
         require_auth( _self );
 
         auto sym = symbol_type(string_to_symbol(4, symbol.c_str())).name();

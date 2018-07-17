@@ -188,7 +188,7 @@
         }
       ]
     },{
-          "name": "copycurstate",
+          "name": "copystates",
           "base": "",
           "fields": [{
               "name": "symbol",
@@ -234,8 +234,8 @@
       "type": "totalsupply",
       "ricardian_contract": ""
     },{
-    "name": "copycurstate",
-    "type": "copycurstate",
+    "name": "copystates",
+    "type": "copystates",
     "ricardian_contract": ""
     }
   ],

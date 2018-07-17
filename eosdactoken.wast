@@ -39,7 +39,7 @@
  (import "env" "require_recipient" (func $require_recipient (param i64)))
  (import "env" "send_inline" (func $send_inline (param i32 i32)))
  (table 11 11 anyfunc)
- (elem (i32.const 0) $__wasm_nullptr $_ZN11eosdactoken9allowanceEyyNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE $_ZN11eosdactoken5issueEyN5eosio5assetENSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE $_ZN11eosdactoken8transferEyyN5eosio5assetENSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE $_ZN11eosdactoken9balanceofEyNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE $_ZN11eosdactoken11transferfeeEyyN5eosio5assetEyS1_NSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE $_ZN11eosdactoken12transferfromEyyN5eosio5assetE $_ZN11eosdactoken12copycurstateENSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE $_ZN11eosdactoken6createEyN5eosio5assetE $_ZN11eosdactoken11totalsupplyENSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE $_ZN11eosdactoken7approveEyyN5eosio5assetE)
+ (elem (i32.const 0) $__wasm_nullptr $_ZN11eosdactoken9allowanceEyyNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE $_ZN11eosdactoken5issueEyN5eosio5assetENSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE $_ZN11eosdactoken8transferEyyN5eosio5assetENSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE $_ZN11eosdactoken9balanceofEyNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE $_ZN11eosdactoken11transferfeeEyyN5eosio5assetEyS1_NSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE $_ZN11eosdactoken12transferfromEyyN5eosio5assetE $_ZN11eosdactoken10copystatesENSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE $_ZN11eosdactoken6createEyN5eosio5assetE $_ZN11eosdactoken11totalsupplyENSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE $_ZN11eosdactoken7approveEyyN5eosio5assetE)
  (memory $0 1)
  (data (i32.const 4) " i\00\00")
  (data (i32.const 16) "subtraction underflow\00")
@@ -112,7 +112,7 @@
  (export "_ZN11eosdactoken12transferfromEyyN5eosio5assetE" (func $_ZN11eosdactoken12transferfromEyyN5eosio5assetE))
  (export "_ZN11eosdactoken9balanceofEyNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE" (func $_ZN11eosdactoken9balanceofEyNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE))
  (export "_ZN11eosdactoken9allowanceEyyNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE" (func $_ZN11eosdactoken9allowanceEyyNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE))
- (export "_ZN11eosdactoken12copycurstateENSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE" (func $_ZN11eosdactoken12copycurstateENSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE))
+ (export "_ZN11eosdactoken10copystatesENSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE" (func $_ZN11eosdactoken10copystatesENSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE))
  (export "_ZN11eosdactoken10checkassetERKN5eosio5assetE" (func $_ZN11eosdactoken10checkassetERKN5eosio5assetE))
  (export "_ZN11eosdactoken11sub_balanceEyN5eosio5assetEy" (func $_ZN11eosdactoken11sub_balanceEyN5eosio5assetEy))
  (export "_ZN11eosdactoken11add_balanceEyN5eosio5assetEy" (func $_ZN11eosdactoken11add_balanceEyN5eosio5assetEy))
@@ -973,13 +973,13 @@
            (br_if $label$27
             (i64.le_s
              (get_local $2)
-             (i64.const 4984328560707220127)
+             (i64.const 4984337330502762495)
             )
            )
            (br_if $label$24
             (i64.eq
              (get_local $2)
-             (i64.const 4984328560707220128)
+             (i64.const 4984337330502762496)
             )
            )
            (br_if $label$23
@@ -8315,7 +8315,7 @@
   )
   (i32.const 1)
  )
- (func $_ZN11eosdactoken12copycurstateENSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
+ (func $_ZN11eosdactoken10copystatesENSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
   (local $2 i32)
   (local $3 i32)
   (local $4 i32)
