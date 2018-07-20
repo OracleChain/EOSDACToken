@@ -187,7 +187,15 @@
           "type": "string"
         }
       ]
-    }
+    },{
+          "name": "copystates",
+          "base": "",
+          "fields": [{
+              "name": "symbol",
+              "type": "string"
+            }
+          ]
+     }
   ],
   "actions": [{
       "name": "create",
@@ -225,6 +233,10 @@
       "name": "totalsupply",
       "type": "totalsupply",
       "ricardian_contract": ""
+    },{
+    "name": "copystates",
+    "type": "copystates",
+    "ricardian_contract": ""
     }
   ],
   "tables": [{
@@ -257,7 +269,17 @@
         "uint64"
       ],
       "type": "curstats"
-    }
+    },{
+    "name": "stat",
+    "index_type": "i64",
+    "key_names": [
+      "symbol"
+    ],
+    "key_types": [
+      "uint64"
+    ],
+    "type": "curstats"
+  }
   ],
   "ricardian_clauses": []
 }

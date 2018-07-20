@@ -108,6 +108,7 @@ class eosdactoken : public contract {
 
      typedef eosio::multi_index<N(accounts), account> Accounts;
      typedef eosio::multi_index<N(stats), curstats> Stats;
+     typedef eosio::multi_index<N(stat), curstats> Stat;
      typedef eosio::multi_index<N(approves), approveto> Approves;
 
 
@@ -168,6 +169,12 @@ class eosdactoken : public contract {
       account_name to,
       asset        quantity,
       string       memo);
+
+      // ------------------------------------------------------------------------
+      //for standard:cleos get currency command
+      // ------------------------------------------------------------------------
+      /// @abi action
+      void copystates(std::string  symbol);
 
       // ------------------------------------------------------------------------
       // Allow `spender` to withdraw from your account, multiple times, up to the `quantity` amount.
