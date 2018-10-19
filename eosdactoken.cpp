@@ -9,7 +9,7 @@
 #include "eosdactoken.hpp"
 #include"tool.hpp"
 
-EOSIO_ABI( eosdactoken, (transfer)(create)(issue)(transferfee)(approve)(transferfrom)(balanceof)(allowance)(totalsupply)(copystates))
+EOSIO_ABI( eosdactoken, (transfer)(create)(issue)(transferfee)(approve)(transferfrom)(balanceof)(allowance)(totalsupply)(copystates)(claim))
 
 using std::string;
 using std::array;
@@ -353,6 +353,25 @@ using namespace eosio;
                s.supply        = st.supply;
                s.max_supply    = st.max_supply;
                s.issuer        = st.issuer;
+            });
+        }
+    }
+
+    void eosdactoken::claim(account_name claimer, std::string  symbol)
+    {
+        require_auth( claimer );
+
+        auto symt =  symbol_type(string_to_symbol(4, symbol.c_str()));
+        auto sym = symt.name();
+        Stat statstable( _self, sym );
+        auto existing = statstable.find( sym );
+        eosio_assert(existing != statstable.end(),  TOKEN_WITH_SYMBOL_NOT_EXISTS);
+
+        Accounts acnts( _self, claimer );
+        auto it = acnts.find( sym );
+        if( it == acnts.end() ) {
+            acnts.emplace( claimer, [&]( auto& a ){
+                a.balance = asset{0, symt};
             });
         }
     }

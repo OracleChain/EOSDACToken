@@ -195,7 +195,18 @@
               "type": "string"
             }
           ]
-     }
+     },{
+      "name": "claim",
+      "base": "",
+      "fields": [{
+          "name": "claimer",
+          "type": "account_name"
+        },{
+          "name": "symbol",
+          "type": "string"
+        }
+      ]
+    }
   ],
   "actions": [{
       "name": "create",
@@ -236,6 +247,10 @@
     },{
     "name": "copystates",
     "type": "copystates",
+    "ricardian_contract": ""
+    },{
+    "name": "claim",
+    "type": "claim",
     "ricardian_contract": ""
     }
   ],

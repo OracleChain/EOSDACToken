@@ -227,6 +227,12 @@ class eosdactoken : public contract {
           print("totalsupply[",symbol.c_str(),"]", get_supply(sn).amount);
       }
 
+      // ------------------------------------------------------------------------
+      // claim token
+      // ------------------------------------------------------------------------
+      //@abi action
+      void claim(account_name claimer, std::string  symbol);
+
 
   private:
       //Sub currency to the 'owner' account,and the cost of 'bindwidth ram、cpu'  is paid by payer
