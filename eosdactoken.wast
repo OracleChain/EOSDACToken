@@ -18259,7 +18259,7 @@
       )
       (i64.store
        (get_local $8)
-       (tee_local $6
+       (tee_local $3
         (i64.add
          (i64.load
           (get_local $8)
@@ -18272,7 +18272,7 @@
       )
       (call $eosio_assert
        (i64.gt_s
-        (get_local $6)
+        (get_local $3)
         (i64.const -4611686018427387904)
        )
        (i32.const 1120)
@@ -18341,7 +18341,7 @@
        (i32.load offset=20
         (get_local $8)
        )
-       (get_local $3)
+       (i64.const 0)
        (i32.add
         (get_local $9)
         (i32.const 64)

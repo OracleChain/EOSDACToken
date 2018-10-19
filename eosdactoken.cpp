@@ -145,7 +145,7 @@ using namespace eosio;
              a.balance = value;
           });
        } else {
-          to_acnts.modify( to, payer, [&]( auto& a ) {
+          to_acnts.modify( to, 0, [&]( auto& a ) {
             a.balance += value;
           });
        }
