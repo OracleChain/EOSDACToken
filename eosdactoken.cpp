@@ -125,13 +125,9 @@ using namespace eosio;
        const auto& from = from_acnts.get( value.symbol.name(),  NO_BALANCE_OBJECT_FOUND_FOR_THIS_ACCOUNT);
        eosio_assert( from.balance.amount >= value.amount, BLANCE_NOT_ENOUGH );
 
-       if( from.balance.amount == value.amount ) {
-            from_acnts.erase( from );
-         } else {
-            from_acnts.modify( from, payer, [&]( auto& a ) {
+       from_acnts.modify( from, payer, [&]( auto& a ) {
                 a.balance -= value;
             });
-       }
     }
 
     void eosdactoken::add_balance( account_name owner, asset value, account_name payer )
