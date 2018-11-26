@@ -9,7 +9,7 @@
 #include "eosdactoken.hpp"
 #include"tool.hpp"
 
-EOSIO_ABI( eosdactoken, (transfer)(create)(issue)(transferfee)(approve)(transferfrom)(balanceof)(allowance)(totalsupply)(copystates)(claim))
+EOSIO_ABI( eosdactoken, (transfer)(create)(issue)(transferfee)(approve)(transferfrom)(balanceof)(allowance)(totalsupply)(claim))
 
 using std::string;
 using std::array;
