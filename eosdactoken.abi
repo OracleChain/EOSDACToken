@@ -188,14 +188,6 @@
         }
       ]
     },{
-          "name": "copystates",
-          "base": "",
-          "fields": [{
-              "name": "symbol",
-              "type": "string"
-            }
-          ]
-     },{
       "name": "claim",
       "base": "",
       "fields": [{
@@ -245,10 +237,6 @@
       "type": "totalsupply",
       "ricardian_contract": ""
     },{
-    "name": "copystates",
-    "type": "copystates",
-    "ricardian_contract": ""
-    },{
     "name": "claim",
     "type": "claim",
     "ricardian_contract": ""
@@ -274,16 +262,6 @@
         "uint64"
       ],
       "type": "account"
-    },{
-      "name": "stats",
-      "index_type": "i64",
-      "key_names": [
-        "symbol"
-      ],
-      "key_types": [
-        "uint64"
-      ],
-      "type": "curstats"
     },{
     "name": "stat",
     "index_type": "i64",

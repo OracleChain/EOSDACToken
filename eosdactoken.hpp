@@ -107,7 +107,6 @@ class eosdactoken : public contract {
      }
 
      typedef eosio::multi_index<N(accounts), account> Accounts;
-     typedef eosio::multi_index<N(stats), curstats> Stats;
      typedef eosio::multi_index<N(stat), curstats> Stat;
      typedef eosio::multi_index<N(approves), approveto> Approves;
 
@@ -125,7 +124,7 @@ class eosdactoken : public contract {
 
 
      asset get_supply( symbol_name symbol )const {
-        Stats statstable( _self, symbol_type(symbol).name());
+        Stat statstable( _self, symbol_type(symbol).name());
         const auto& st = statstable.get(symbol_type(symbol).name());
         return st.max_supply;
      }

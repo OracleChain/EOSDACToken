@@ -19,7 +19,7 @@ using namespace eosio;
     void eosdactoken::checkasset(const asset &quantity){
         eosio_assert( quantity.symbol.is_valid(), INVALID_SYMBOL_NAME);
         auto sym = quantity.symbol.name();
-        Stats statstable( _self, sym );
+        Stat statstable( _self, sym );
         const auto& ite = statstable.find( sym );
         eosio_assert( ite != statstable.end(),  TOKEN_WITH_SYMBOL_DOES_NOT_EXIST_CREATE_TOKEN_BEFORE_ISSUE);
         const auto& st = *ite;
@@ -37,7 +37,7 @@ using namespace eosio;
 
         eosio_assert( memo.size() <= 256, MEMO_HAS_MORE_THAN_256_BYTES);
         auto sym = quantity.symbol.name();
-        Stats statstable( _self, sym );
+        Stat statstable( _self, sym );
         const auto& ite = statstable.find( sym );
         const auto& st = *ite;
         eosio_assert( quantity.amount <= st.max_supply.amount - st.supply.amount, QUANTITY_EXCEEDS_AVAILABLE_SUPPLY);
@@ -77,7 +77,7 @@ using namespace eosio;
           eosio_assert( is_account( tofeeadmin ), TO_ACCOUNT_DOES_NOT_EXIST);
 
           auto sym = quantity.symbol.name();
-          Stats statstable( _self, sym );
+          Stat statstable( _self, sym );
           const auto& st = statstable.get( sym );
 
           require_recipient( from );
@@ -104,7 +104,7 @@ using namespace eosio;
         eosio_assert( is_account( to ), TO_ACCOUNT_DOES_NOT_EXIST);
 
         auto sym = quantity.symbol.name();
-        Stats statstable( _self, sym );
+        Stat statstable( _self, sym );
         const auto& st = statstable.get( sym );
 
         require_recipient( from );
@@ -154,7 +154,7 @@ using namespace eosio;
 
         eosio_assert( quantity.symbol.is_valid(), INVALID_SYMBOL_NAME);
         auto sym = quantity.symbol.name();
-        Stats statstable( _self, sym );
+        Stat statstable( _self, sym );
         const auto& ite = statstable.find( sym );
         eosio_assert( ite != statstable.end(),  TOKEN_WITH_SYMBOL_DOES_NOT_EXIST_CREATE_TOKEN_BEFORE_ISSUE);
         const auto& st = *ite;
@@ -312,7 +312,7 @@ using namespace eosio;
       eosio_assert( currency.is_valid(), INVALID_QUANTITY);
       eosio_assert( currency.amount>0, TOKEN_MAX_SUPPLY_MUST_POSITIVE) ;
 
-       Stats statstable( _self, sym.name() );
+       Stat statstable( _self, sym.name() );
        auto existing = statstable.find( sym.name() );
        eosio_assert( existing == statstable.end(), TOKEN_WITH_SYMBOL_ALREADY_EXISTS);
 
@@ -323,34 +323,6 @@ using namespace eosio;
           s.max_supply    = currency;
           s.issuer        = issuer;
        });
-    }
-
-    void eosdactoken::copystates(std::string symbol){
-        require_auth( _self );
-
-        auto sym = symbol_type(string_to_symbol(4, symbol.c_str())).name();
-        Stats statstable( _self, sym );
-        auto existing = statstable.find( sym );
-        const auto& st = *existing;
-
-
-        eosio_assert( existing != statstable.end(), TOKEN_WITH_SYMBOL_NOT_EXISTS);
-
-        Stat stattable( _self, sym );
-        const auto& stdest = stattable.find(sym);
-        if(stdest!=stattable.end()){
-            stattable.modify( stdest, 0, [&]( auto& s ) {
-                s.supply        = st.supply;
-                s.max_supply    = st.max_supply;
-                s.issuer        = st.issuer;
-             });
-        }else{
-            stattable.emplace( _self, [&]( auto& s ) {
-               s.supply        = st.supply;
-               s.max_supply    = st.max_supply;
-               s.issuer        = st.issuer;
-            });
-        }
     }
 
     void eosdactoken::claim(account_name claimer, std::string  symbol)
